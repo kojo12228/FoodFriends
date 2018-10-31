@@ -1,0 +1,131 @@
+#ingredientsResults
+{
+	 margin-bottom: 12px;
+}
+
+#goGuruDiv
+{
+	text-align: center;
+}
+
+#myUL
+{
+    /* Remove default list styling */
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+#myUL li a 
+{
+    border: 1px solid #ddd; /* Add a border to all links */
+    margin-top: -1px; /* Prevent double borders */
+    background-color: #ffff00; /* Grey background color */
+    padding: 12px; /* Add some padding */
+    text-decoration: none; /* Remove default text underline */
+    font-size: 18px; /* Increase the font-size */
+    color: black; /* Add a black text color */
+    display: block; /* Make it into a block element to fill the whole list */
+}
+
+#myUL li a:hover:not(.header) 
+{
+    background-color: #eee; /* Add a hover effect to all links, except for headers */
+}
+
+#mainTitle
+{
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+    color: red;
+}
+#mainBody 
+{
+   padding: 20px;
+}
+#ingredientSB
+{
+    text-align: center;
+    margin-bottom: 35px;
+
+}
+
+#ingredientBar 
+{
+    margin-bottom: 12px; 
+}
+
+
+/*The margin for the search box*/
+.custom-search-form {
+    margin: 50px auto auto;
+}
+
+#search
+{
+	border: 2px solid #ccc;
+	text-align: center;	
+    padding: 13px;    
+    border-radius:50px;
+    font-family: 'Open Sans', sans-serif;
+    outline: none;
+}
+
+
+/*Responsible for the basic button design */
+#submit {
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f24537', endColorstr='#c62d1f',GradientType=0);
+    background-color:#f24537;
+    border:1px solid #d02718;
+    color:#ffffff;
+    outline: none;
+    /*Customisations*/
+     border: 2px solid #ccc;
+    padding: 13px;
+    -moz-border-radius:50px;
+    -webkit-border-radius:50px;
+    border-radius:50px;
+    font-family: 'Open Sans', sans-serif;
+    outline: none;
+
+}
+/*This causes button to appear indented when hovered over*/
+#submit:hover {
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #c62d1f), color-stop(1, #f24537));
+    background:-moz-linear-gradient(top, #c62d1f 5%, #f24537 100%);
+    background:-webkit-linear-gradient(top, #c62d1f 5%, #f24537 100%);
+    background:-o-linear-gradient(top, #c62d1f 5%, #f24537 100%);
+    background:-ms-linear-gradient(top, #c62d1f 5%, #f24537 100%);
+    background:linear-gradient(to bottom, #c62d1f 5%, #f24537 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#c62d1f', endColorstr='#f24537',GradientType=0);
+    background-color:#c62d1f;
+}
+/*This allows button to be pressed visually*/
+#submit:active {
+	tetx
+    top:1px;
+}
+
+#addIngr
+{
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f24537', endColorstr='#c62d1f',GradientType=0);
+    background-color:#65c33d;
+    border:1px solid #d02718;
+    color:#ffffff;
+    outline: none;
+    /*Customisations*/
+    border: 1.5px solid #ccc;
+    padding: 13px;
+   
+    border-radius:50px;
+    font-family: 'Open Sans', sans-serif;
+    outline: none;
+   
+
+
+}
+#ingredientsLabel
+{
+	font-family: 'Open Sans', sans-serif;
+}
+
+
