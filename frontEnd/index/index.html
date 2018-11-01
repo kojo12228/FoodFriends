@@ -1,12 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html id="entireThing">
 <link rel="stylesheet" href="style.css">
-<body id="mainBody">
-  <!--<img src="/logo" alt="Recipe Guru" style="width: 50px;height: 50px"-->
-  <h1 id="mainTitle">Recipe Guru</h1>
+<div id="titleDiv">
+<head>
+        <title>Recipe Guru</title>
+        <link rel="shortcut icon" href="img/nameofyouriconfile.ico">
+        <!--links this to a javascript file-->
+        <script src="main.js"></script>
+        <!--h1 id="mainTitle">Recipe Guru</h1-->
+        <a>
+        <img src="title.png" alt="Recipe Guru">
+      </a>
+</head>
+</div>
+<body id="mainBody">  
     <!--Search for ingredients search box + Add Ingredient button-->
     <div id="ingredientSB">
+      <!--Search box-->
       <input id="search" type="text" placeholder="Search for ingredients">
+      <!--button-->
       <input type="submit" id="addIngr" value="+">  
     </div>
 
@@ -17,7 +29,7 @@
 
     <!--Ingredients List/results-->
     <div id="ingredientsResults">
-      <ul id="myUL">
+      <ul id="returnedIngredients">
         <li><a href="#">Milk</a></li>
         <li><a href="#">Flour</a></li>
 
@@ -30,16 +42,17 @@
       </ul>
     </div>
 
-    <!---->
-    <div id= "goGuruDiv">
+    <div id= "goGuru">
       <input id="submit" type="submit" value="GO Guru!">
-    </div>
-    <br/>
-    
-
+      <br/>
+      <br/>
+      <br/>
+      <a>
+        <img src="logo.png" id="rgLogo" alt="Recipe Guru">
+      </a>
+    </div>  
 </body>
+<script>
+</script>
 
-  <script>
-  
-  </script>
 </html>
