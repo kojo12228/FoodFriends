@@ -1,23 +1,31 @@
+@font-face {
+    font-family: 'ARBONNIE';
+    src: url('ar-bonnie.eot');
+    src: local('☺'),
+         url('./fonts/ARBONNIE.woff') format('woff'), 
+         url('./fonts/ARBONNIE.ttf') format('truetype'), 
+         url('./fonts/ARBONNIE.svg#ARBONNIE') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+#arTitle
+{
+    font-family: 'ARBONNIE';
+    font-size: 300px;
+    font-weight: lighter;
+    text-align: center;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
 #entireThing
 {
     background-color: #f2f2f2
 }
 #mainBody 
 {
-   padding: 20px;
+   
 }
-#titleDiv
-{
-   text-align: center;
-   margin-bottom: 30px;
-}
-#mainTitle
-{
-    font-family: 'Open Sans', sans-serif;
-    text-align: center;
-    color: red;
-}
-#ingredientSB
+#ingredientSearch
 {
     text-align: center;
     margin-bottom: 35px;
@@ -46,20 +54,19 @@
     font-size: 30px;
     font-family: 'Open Sans', sans-serif;
     outline: none;
-    width: 4%;
+    width: 3%;
     opacity: 0.8;
 
 
 }
 #addIngr:hover {opacity: 1}
-#addIngr:active {
-  background-color: #3e8e41;
-  transform: translateY(4px);
-}
 #ingredientsLabel
 {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'ARBONNIE';
+    font-size: 40px;
+    font-weight: lighter;
     text-align: left;
+    margin-bottom: 0px;
 }
 #returnedIngredients
 {
@@ -86,7 +93,7 @@
 }
 #goGuru
 {
-	text-align: center;
+    text-align: center;
 }
 #submit 
 {
@@ -101,7 +108,9 @@
     -moz-border-radius:50px;
     -webkit-border-radius:50px;
     border-radius:50px;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'ARBONNIE';
+    font-size: 40px;
+    font-weight: bold;
     outline: none;
 
 }
