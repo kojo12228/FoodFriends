@@ -52,6 +52,10 @@
 
 }
 #addIngr:hover {opacity: 1}
+#addIngr:active {
+  background-color: #3e8e41;
+  transform: translateY(4px);
+}
 #ingredientsLabel
 {
     font-family: 'Open Sans', sans-serif;
