@@ -7,6 +7,7 @@
          url('./fonts/ARBONNIE.svg#ARBONNIE') format('svg');
     font-weight: normal;
     font-style: normal;
+
 }
 #arTitle
 {
@@ -23,7 +24,7 @@
 }
 #mainBody 
 {
-   
+   white-space: nowrap;
 }
 #ingredientSearch
 {
@@ -56,6 +57,9 @@
     outline: none;
     width: 3%;
     opacity: 0.8;
+    position: relative;
+    cursor: pointer;
+
 
 
 }
@@ -97,21 +101,21 @@
 }
 #submit 
 {
-    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f24537', endColorstr='#c62d1f',GradientType=0);
+    /*filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f24537', endColorstr='#c62d1f',GradientType=0);*/
     background-color:#f24537;
     border:1px solid #d02718;
     color:#ffffff;
     outline: none;
     /*Customisations*/
-     border: 2px solid #ccc;
+    border: 3px solid #ccc;
     padding: 13px;
-    -moz-border-radius:50px;
-    -webkit-border-radius:50px;
     border-radius:50px;
+    box-shadow: 0 7px #999;
     font-family: 'ARBONNIE';
     font-size: 40px;
     font-weight: bold;
     outline: none;
+    cursor: pointer;
 
 }
 /*This causes button to appear indented when hovered over*/
@@ -129,8 +133,10 @@
 /*This allows button to be pressed visually*/
 #submit:active
 {
-    tetx
+    
     top:1px;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
 }
 
 /* LIST #8 */
