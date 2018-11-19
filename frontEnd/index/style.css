@@ -35,12 +35,14 @@
 #search
 {
     border: 2px solid #ccc; /*#ccc*/
-    text-align: center; 
+    text-align: left;
+    padding-top:3px;
     padding: 13px;    
     border-radius:50px;
     font-family: 'Open Sans', sans-serif;
     font-size: 45px;
     outline: none;
+    
 }
 #addIngr
 {
