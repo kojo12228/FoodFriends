@@ -35,7 +35,7 @@
 #search
 {
     border: 2px solid #ccc; /*#ccc*/
-    text-align: left;
+    text-align: center;
     padding-top:3px;
     padding: 13px;    
     border-radius:50px;
@@ -57,7 +57,6 @@
     font-size: 30px;
     font-family: 'Open Sans', sans-serif;
     outline: none;
-    width: 3%;
     opacity: 0.8;
     position: relative;
     cursor: pointer;
