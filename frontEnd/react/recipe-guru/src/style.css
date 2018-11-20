@@ -12,7 +12,7 @@
 #arTitle
 {
     font-family: 'ARBONNIE';
-    font-size: 250px;
+    font-size: 300px;
     font-weight: lighter;
     text-align: center;
     margin-top: 0px;
@@ -26,14 +26,10 @@
 {
    white-space: nowrap;
 }
-.ingredientSearch
+#ingredientSearch
 {
     text-align: center;
     margin-bottom: 35px;
-    overflow: auto;
-    line-height: 70%;
-
-    /*padding-bottom: 200px;    */
 
 }
 #search
@@ -43,50 +39,29 @@
     padding-top:3px;
     padding: 13px;    
     border-radius:50px;
-    font-family: 'Helvetica';
-    font-size: 40px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 45px;
     outline: none;
-    /*vertical-align: top;*/
-    
-
     
 }
 #addIngr
 {
-
-    width: 50px;
-    height: 50px;
-    padding: 13px 13px;
-    padding-bottom: 20px;
-    font-size: 25px;
-    border-radius: 50%;
-    display: inline-block;
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f24537', endColorstr='#c62d1f',GradientType=0);
     background-color:#65c33d;
-    border: 1.5px solid #ccc;
+    border:1px solid #d02718;
     color:#ffffff;
-    cursor: pointer;
-<<<<<<< HEAD
     outline: none;
-    line-height: 70%;
-    vertical-align: 40%;
-
-=======
->>>>>>> origin/Michael's-Branch
+    /*Customisations*/
+    border: 1.5px solid #ccc; /*ccc*/
+    border-radius:100px;
+    font-size: 30px;
+    font-family: 'Open Sans', sans-serif;
+    outline: none;
+    opacity: 0.8;
+    position: relative;
+    cursor: pointer;
 }
-#addIngr:hover {
-    /*opacity: 1;*/
-    transition: 0s;
-    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #65c33d), color-stop(1, #65c33d));
-    background:-ms-linear-gradient(top, #65c33d 5%, #65c33d 100%);
-    background:linear-gradient(to bottom, #65c33d 5%, #65c33d 100%);
-    background-color:#65c33d;
-}
-#addIngr:active {
-    
-    top:1px;
-    box-shadow: 0 5px #666;
-    transform: translateY(4px);
-}
+#addIngr:hover {opacity: 1}
 #ingredientsLabel
 {
     font-family: 'ARBONNIE';
@@ -98,7 +73,6 @@
 #returnedIngredients
 {
     /* Remove default list styling */
-    
     list-style-type: none;
     padding: 0;
     margin: 0;
@@ -110,9 +84,8 @@
     margin-top: -1px; /* Prevent double borders */
     background-color: #ff5454; /* Grey background color */
     padding: 12px; /* Add some padding */
-    font-family: 'Helvetica';
     text-decoration: none; /* Remove default text underline */
-    font-size: 22px; /* Increase the font-size */
+    font-size: 18px; /* Increase the font-size */
     color: black; /* Add a black text color */
     display: block; /* Make it into a block element to fill the whole list */
 }
@@ -167,7 +140,7 @@
 /* LIST #8 */
 #list8 {  }
 #list8 ul { list-style:none; }
-#list8 ul li { font-family:'Helvetica'; font-size:18px; }
+#list8 ul li { font-family:Georgia,serif,Times; font-size:18px; }
 #list8 ul li a { display:block; width:300px; height:28px; background-color:#333; border-left:5px solid #222; border-right:5px solid #222; padding-left:10px;
   text-decoration:none; color:#bfe1f1; }
 #list8 ul li a:hover {  -moz-transform:rotate(-5deg); -moz-box-shadow:10px 10px 20px #000000;
