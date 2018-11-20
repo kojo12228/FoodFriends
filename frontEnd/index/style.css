@@ -66,6 +66,7 @@
     color:#ffffff;
     cursor: pointer;
 <<<<<<< HEAD
+<<<<<<< HEAD
     outline: none;
     line-height: 70%;
     vertical-align: 40%;
@@ -86,6 +87,8 @@
     top:1px;
     box-shadow: 0 5px #666;
     transform: translateY(4px);
+=======
+>>>>>>> origin/Michael's-Branch
 }
 #ingredientsLabel
 {
