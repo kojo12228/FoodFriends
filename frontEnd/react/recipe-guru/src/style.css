@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'ARBONNIE';
-    src: url('ar-bonnie.eot');
+    src: url('./fonts/ARBONNIE.eot');
     src: local('☺'),
          url('./fonts/ARBONNIE.woff') format('woff'), 
          url('./fonts/ARBONNIE.ttf') format('truetype'), 
