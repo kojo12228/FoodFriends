@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './style.css';
 
+
 class App extends Component {
   render() {
     return (
@@ -37,10 +38,10 @@ class App extends Component {
           <li><a href="#">Paprika</a></li>
         </ol>
         <div id="goGuru">
-          <input id="submit" type="submit" defaultValue="GO Guru!" />
-          <a>
-            <img src="logo.png" id="rgLogo" alt="Recipe Guru" />
-          </a>
+          <button type="button" id="submit">GO GURU!</button>
+        </div>
+        <div id="rgLogo">
+        <img src={ require('./logo.png') } />
         </div>
       </div>
     );
