@@ -17,7 +17,7 @@
                 return $(this).text() == userinput
               });
               // console.log(exist)
-              if (!exist.length){
+              if (!exist.length && userinput!=""){
                 // console.log("hey, this already exists"+userinput);
                 //exists
                 $("#returnedIngredients").prepend('<li><a href="#">'+userinput+'</a></li>');
