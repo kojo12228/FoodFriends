@@ -10,7 +10,7 @@ class App extends Component {
         <title>Recipe Guru</title>
         <link rel="shortcut icon" href="img/nameofyouriconfile.ico" />
         {/*links this to a javascript file*/}
-        // 
+        
         {/*h1 id="mainTitle">Recipe Guru</h1*/}
         <a>
           {/*img src="title2.png" alt="Recipe Guru"*/}
