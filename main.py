@@ -64,9 +64,11 @@ def modelToDictionary(recipe):
         "sodium": recipe.sodium
     }
 
-@app.route("/recipes")
+@app.route("/recipes/get")
 def recipeNoFilter():
     ingredients = request.args.getlist("ing[]")
+    ingredientsEx = request.args.getlist("ingexc[]")
     recipes = Recipe.query()
-    matchingRecipes = [ modelToDictionary(recipe) for recipe in recipes.iter() if set(ingredients) <= set(recipe.ingredientNames) ]
+    includeRecipes = [ recipe for recipe in recipes.iter() if set(ingredients) <= set(recipe.ingredientNames) ] # <= is subset/equal to
+    matchingRecipes = [ modelToDictionary(recipe) for recipe in includeRecipes if len(set(recipe.ingredientNames) & set(ingredientsEx)) == 0 ] # & is intersection
     return jsonify(matchingRecipes)
