@@ -72,3 +72,14 @@ def recipeNoFilter():
     includeRecipes = [ recipe for recipe in recipes.iter() if set(ingredients) <= set(recipe.ingredientNames) ] # <= is subset/equal to
     matchingRecipes = [ modelToDictionary(recipe) for recipe in includeRecipes if len(set(recipe.ingredientNames) & set(ingredientsEx)) == 0 ] # & is intersection
     return jsonify(matchingRecipes)
+
+# For React Routing
+# Snippet derived from http://flask.pocoo.org/snippets/57/
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch_all(path):
+    return render_template('index.html')
+
+if __name__ == '__main__':
+    app.run()
+#
