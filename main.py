@@ -33,7 +33,7 @@ class Recipe(ndb.Model):
     ingredientNames = ndb.StringProperty(repeated=True)
     sodium = ndb.IntegerProperty()
 
-def modelToDictionary(recipe):
+def modelToDictionary(recipe, ingredientsMatched, ingredientsNotMatched):
     return {
         "directions": recipe.directions,
         "fat": recipe.fat,
@@ -42,7 +42,10 @@ def modelToDictionary(recipe):
         "rating": recipe.rating,
         "title": recipe.title,
         "ingredients": recipe.ingredients,
-        "sodium": recipe.sodium
+        "sodium": recipe.sodium,
+        "matched": ingredientsMatched,
+        "unmatched": ingredientsNotMatched,
+        "percentage": (len(ingredientsMatched) * 100) // (len(ingredientsMatched) + len(ingredientsNotMatched)) 
     }
 
 @app.route("/api/v1/recipes")
@@ -67,11 +70,34 @@ def getRecipe():
         elif (diet[0] == "Pesc"):
             ingredientsEx = ingredientsEx + dietaryJSON['Pescatarian'] + dietaryJSON['Meat']
     
+    '''
+    Atleast: match recipes if they contain at least all the ingredients
+    provided
+    Atmost: match recipes if they contain at most all the ingredients
+    provided
+    '''
     match = request.args.get("match")
 
+    '''
+    minMatch: the minimum subset size of ingredients provided that can 
+    match with a recipe.
+    - If 1 or less will match with any subset of ingredients provided
+    (apart room empty set)
+    - If more than the number of ingredients provided, there will be no recipes
+    '''
+    minMatch = request.args.get("minMatch")
+    if (minMatch == None):
+        minMatch = 0
+    else:
+        minMatch = int(minMatch)
+
     recipes = Recipe.query()
-    includeRecipes = [ recipe for recipe in recipes.iter() if matchRecipes(match, ingredients, recipe.ingredientNames) ] # <= is subset/equal to
-    matchingRecipes = [ modelToDictionary(recipe) for recipe in includeRecipes if len(set(recipe.ingredientNames) & set(ingredientsEx)) == 0 ] # & is intersection
+    notExcRecipeModels = [ recipe for recipe in recipes.iter() if len(set(recipe.ingredientNames) & set(ingredientsEx)) == 0 ]
+    matchingRecipes = None
+    if (match == "Atleast" or match == None):
+        matchingRecipes = atleast(notExcRecipeModels, ingredients, minMatch)
+    else:
+        matchingRecipes = atmost(notExcRecipeModels, ingredients, minMatch)
     return jsonify(matchingRecipes)
 
 def matchRecipes(matchQueryValue, ingredients, recipeIngredientNames):
@@ -83,61 +109,18 @@ def matchRecipes(matchQueryValue, ingredients, recipeIngredientNames):
 @app.route("/api/test/recipes")
 def recipeNoFilter():
     try:
-        ingredients = request.args.getlist("ing[]")
-        ingredientsEx = request.args.getlist("ingexc[]")
-
-        allergies = request.args.getlist("allergy[]")
-        diet = request.args.get("diet")
-        if (len(allergies) > 0):
-            jsonfilepath = os.path.join(app.root_path, 'data', "allergy.json")
-            allergyJSON = json.load(open(jsonfilepath))
-            for allergy in allergies:
-                ingredientsEx = ingredientsEx + allergyJSON[allergy]
-        if (not diet == None):
-            jsonfilepath = os.path.join(app.root_path, 'data', "dietary.json")
-            dietaryJSON = json.load(open(jsonfilepath))
-            if (diet[0] == "Vgn"):
-                ingredientsEx = ingredientsEx + dietaryJSON['Vegan'] + dietaryJSON['Meat'] + dietaryJSON['Fish'] + dietaryJSON['Egg'] + dietaryJSON['Dairy']
-            elif (diet[0] == "Vgt"):
-                ingredientsEx = ingredientsEx + dietaryJSON['Vegetarian'] + dietaryJSON['Meat'] + dietaryJSON['Fish']
-            elif (diet[0] == "Pesc"):
-                ingredientsEx = ingredientsEx + dietaryJSON['Pescatarian'] + dietaryJSON['Meat']
-        
-        match = request.args.get("match")
-        minMatch = request.args.get("minMatch")
-        if (minMatch == None):
-            minMatch = 0
-        else:
-            minMatch = int(minMatch)
-
-        recipes = Recipe.query()
-        notExcRecipeModels = [ recipe for recipe in recipes.iter() if len(set(recipe.ingredientNames) & set(ingredientsEx)) == 0 ]
-        matchingRecipes = None
-        if (match == "Atleast" or match == None):
-            matchingRecipes = atleast(notExcRecipeModels, ingredients, minMatch)
-        else:
-            matchingRecipes = atmost(notExcRecipeModels, ingredients, minMatch)
-        return jsonify(matchingRecipes)
-    except Exception as e:
+        return "Testing not in use"
+    except Exception:
         trace = traceback.format_exc()
         return str(trace)
 
-def modelToDictionaryV2(recipe, ingredientsMatched, ingredientsNotMatched):
-    return {
-        "directions": recipe.directions,
-        "fat": recipe.fat,
-        "categories": recipe.categories,
-        "calories": recipe.protein,
-        "rating": recipe.rating,
-        "title": recipe.title,
-        "ingredients": recipe.ingredients,
-        "sodium": recipe.sodium,
-        "matched": ingredientsMatched,
-        "unmatched": ingredientsNotMatched,
-        "percentage": (len(ingredientsMatched) * 100) // (len(ingredientsMatched) + len(ingredientsNotMatched)) 
-    }
-
 def powerset(ingredientsToMatch):
+    '''Returns all possible subsets of list of ingredients provided, \
+    in a tuple with every element in the ingredients list provided \
+    not in the subset
+
+    \npowerset([1,2]) = [([1, 2], []), ([1], [2]), ([2], [1])]
+    '''
     ingLists = []
     for i in range(len(ingredientsToMatch)):
         for j in reversed(range(i+1, len(ingredientsToMatch)+1)):
@@ -150,6 +133,17 @@ def powerset(ingredientsToMatch):
     return tuples
 
 def atleast(recipeModels, ingredientsInc, minMatchNo):
+    '''Returns recipes that have atleast a subset of ingredientsInc, \
+    the ingredients to match with, which is at least the size of minMatchNo
+
+    recipeModels
+        list of recipes in Recipe model format
+    ingredientsInc
+        list of ingredients to match recipes with
+    minMatchNo
+        minimum subset of ingredientsInc to match with, should be between
+        1 and number of ingredients provided
+    '''
     powersetIngredients = powerset(ingredientsInc)
     matchingRecipeModels = []
     for ingMatch, notIngMatch in powersetIngredients:
@@ -160,11 +154,22 @@ def atleast(recipeModels, ingredientsInc, minMatchNo):
 
     matchingRecipes = []
     for recipe, ingMatch, notIngMatch in matchingRecipeModels:
-        matchingRecipes.append(modelToDictionaryV2(recipe, ingMatch, notIngMatch))
+        matchingRecipes.append(modelToDictionary(recipe, ingMatch, notIngMatch))
     
     return matchingRecipes
 
 def atmost(recipeModels, ingredientsInc, minMatchNo):
+    '''Returns recipes for which the ingredients are ingredientsInc, \
+    the ingredients to match with, or a subset larger than minMatchNo 
+
+    recipeModels
+        list of recipes in Recipe model format
+    ingredientsInc
+        list of ingredients to match recipes with
+    minMatchNo
+        minimum subset of ingredientsInc to match with, should be between
+        1 and number of ingredients provided
+    '''
     powersetIngredients = powerset(ingredientsInc)
     matchingRecipeModels = []
     for ingMatch, notIngMatch in powersetIngredients:
@@ -174,7 +179,7 @@ def atmost(recipeModels, ingredientsInc, minMatchNo):
                     matchingRecipeModels.append((recipe, ingMatch, notIngMatch))
     matchingRecipes = []
     for recipe, ingMatch, notIngMatch in matchingRecipeModels:
-        matchingRecipes.append(modelToDictionaryV2(recipe, ingMatch, notIngMatch))
+        matchingRecipes.append(modelToDictionary(recipe, ingMatch, notIngMatch))
     return matchingRecipes
 
 
