@@ -65,10 +65,18 @@ def getRecipe():
         elif (diet[0] == "Pesc"):
             ingredientsEx = ingredientsEx + dietaryJSON['Pescatarian'] + dietaryJSON['Meat']
     
+    match = request.args.get("match")
+
     recipes = Recipe.query()
-    includeRecipes = [ recipe for recipe in recipes.iter() if set(ingredients) <= set(recipe.ingredientNames) ] # <= is subset/equal to
+    includeRecipes = [ recipe for recipe in recipes.iter() if matchRecipes(match, ingredients, recipe.ingredientNames) ] # <= is subset/equal to
     matchingRecipes = [ modelToDictionary(recipe) for recipe in includeRecipes if len(set(recipe.ingredientNames) & set(ingredientsEx)) == 0 ] # & is intersection
     return jsonify(matchingRecipes)
+
+def matchRecipes(matchQueryValue, ingredients, recipeIngredientNames):
+    if (matchQueryValue == "Atleast" or matchQueryValue == None):
+        return set(ingredients) <= set(recipeIngredientNames)
+    elif (matchQueryValue == "Atmost"):
+        return set(ingredients) >= set(recipeIngredientNames)
 
 @app.route("/api/test/recipes")
 def recipeNoFilter():
@@ -98,12 +106,6 @@ def recipeNoFilter():
     includeRecipes = [ recipe for recipe in recipes.iter() if matchRecipes(match, ingredients, recipe.ingredientNames) ] # <= is subset/equal to
     matchingRecipes = [ modelToDictionary(recipe) for recipe in includeRecipes if len(set(recipe.ingredientNames) & set(ingredientsEx)) == 0 ] # & is intersection
     return jsonify(matchingRecipes)
-
-def matchRecipes(matchQueryValue, ingredients, recipeIngredientNames):
-    if (matchQueryValue == "Atleast" or matchQueryValue == None):
-        return set(ingredients) <= set(recipeIngredientNames)
-    elif (matchQueryValue == "Only"):
-        return set(ingredients) >= set(recipeIngredientNames)
 
 # For React Routing
 # Snippet derived from http://flask.pocoo.org/snippets/57/
