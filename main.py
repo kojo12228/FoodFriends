@@ -1,4 +1,6 @@
 import os
+import traceback
+
 from flask import Flask, render_template, request, json, jsonify
 from google.appengine.ext import ndb
 from flask_cors import CORS
@@ -80,32 +82,101 @@ def matchRecipes(matchQueryValue, ingredients, recipeIngredientNames):
 
 @app.route("/api/test/recipes")
 def recipeNoFilter():
-    ingredients = request.args.getlist("ing[]")
-    ingredientsEx = request.args.getlist("ingexc[]")
+    try:
+        ingredients = request.args.getlist("ing[]")
+        ingredientsEx = request.args.getlist("ingexc[]")
 
-    allergies = request.args.getlist("allergy[]")
-    diet = request.args.get("diet")
-    if (len(allergies) > 0):
-        jsonfilepath = os.path.join(app.root_path, 'data', "allergy.json")
-        allergyJSON = json.load(open(jsonfilepath))
-        for allergy in allergies:
-            ingredientsEx = ingredientsEx + allergyJSON[allergy]
-    if (not diet == None):
-        jsonfilepath = os.path.join(app.root_path, 'data', "dietary.json")
-        dietaryJSON = json.load(open(jsonfilepath))
-        if (diet[0] == "Vgn"):
-            ingredientsEx = ingredientsEx + dietaryJSON['Vegan'] + dietaryJSON['Meat'] + dietaryJSON['Fish'] + dietaryJSON['Egg'] + dietaryJSON['Dairy']
-        elif (diet[0] == "Vgt"):
-            ingredientsEx = ingredientsEx + dietaryJSON['Vegetarian'] + dietaryJSON['Meat'] + dietaryJSON['Fish']
-        elif (diet[0] == "Pesc"):
-            ingredientsEx = ingredientsEx + dietaryJSON['Pescatarian'] + dietaryJSON['Meat']
+        allergies = request.args.getlist("allergy[]")
+        diet = request.args.get("diet")
+        if (len(allergies) > 0):
+            jsonfilepath = os.path.join(app.root_path, 'data', "allergy.json")
+            allergyJSON = json.load(open(jsonfilepath))
+            for allergy in allergies:
+                ingredientsEx = ingredientsEx + allergyJSON[allergy]
+        if (not diet == None):
+            jsonfilepath = os.path.join(app.root_path, 'data', "dietary.json")
+            dietaryJSON = json.load(open(jsonfilepath))
+            if (diet[0] == "Vgn"):
+                ingredientsEx = ingredientsEx + dietaryJSON['Vegan'] + dietaryJSON['Meat'] + dietaryJSON['Fish'] + dietaryJSON['Egg'] + dietaryJSON['Dairy']
+            elif (diet[0] == "Vgt"):
+                ingredientsEx = ingredientsEx + dietaryJSON['Vegetarian'] + dietaryJSON['Meat'] + dietaryJSON['Fish']
+            elif (diet[0] == "Pesc"):
+                ingredientsEx = ingredientsEx + dietaryJSON['Pescatarian'] + dietaryJSON['Meat']
+        
+        match = request.args.get("match")
+        minMatch = request.args.get("minMatch")
+        if (minMatch == None):
+            minMatch = 0
+        else:
+            minMatch = int(minMatch)
+
+        recipes = Recipe.query()
+        notExcRecipeModels = [ recipe for recipe in recipes.iter() if len(set(recipe.ingredientNames) & set(ingredientsEx)) == 0 ]
+        matchingRecipes = None
+        if (match == "Atleast" or match == None):
+            matchingRecipes = atleast(notExcRecipeModels, ingredients, minMatch)
+        else:
+            matchingRecipes = atmost(notExcRecipeModels, ingredients, minMatch)
+        return jsonify(matchingRecipes)
+    except Exception as e:
+        trace = traceback.format_exc()
+        return str(trace)
+
+def modelToDictionaryV2(recipe, ingredientsMatched, ingredientsNotMatched):
+    return {
+        "directions": recipe.directions,
+        "fat": recipe.fat,
+        "categories": recipe.categories,
+        "calories": recipe.protein,
+        "rating": recipe.rating,
+        "title": recipe.title,
+        "ingredients": recipe.ingredients,
+        "sodium": recipe.sodium,
+        "matched": ingredientsMatched,
+        "unmatched": ingredientsNotMatched,
+        "percentage": (len(ingredientsMatched) * 100) // (len(ingredientsMatched) + len(ingredientsNotMatched)) 
+    }
+
+def powerset(ingredientsToMatch):
+    ingLists = []
+    for i in range(len(ingredientsToMatch)):
+        for j in reversed(range(i+1, len(ingredientsToMatch)+1)):
+            ingLists = ingLists + [ingredientsToMatch[i:j]]
+    ingLists.sort(key= lambda x : -len(x))
+    tuples = []
+    setIng = set(ingredientsToMatch)
+    for i in ingLists:
+        tuples = tuples + [(i, list(setIng - set(i)))]
+    return tuples
+
+def atleast(recipeModels, ingredientsInc, minMatchNo):
+    powersetIngredients = powerset(ingredientsInc)
+    matchingRecipeModels = []
+    for ingMatch, notIngMatch in powersetIngredients:
+        if len(ingMatch) >= minMatchNo:
+            for recipe in recipeModels:
+                if set(ingMatch) <= set(recipe.ingredientNames) and len(set(notIngMatch) & set(recipe.ingredientNames)) == 0:
+                    matchingRecipeModels.append((recipe, ingMatch, notIngMatch))
+
+    matchingRecipes = []
+    for recipe, ingMatch, notIngMatch in matchingRecipeModels:
+        matchingRecipes.append(modelToDictionaryV2(recipe, ingMatch, notIngMatch))
     
-    match = request.args.get("match")
+    return matchingRecipes
 
-    recipes = Recipe.query()
-    includeRecipes = [ recipe for recipe in recipes.iter() if matchRecipes(match, ingredients, recipe.ingredientNames) ] # <= is subset/equal to
-    matchingRecipes = [ modelToDictionary(recipe) for recipe in includeRecipes if len(set(recipe.ingredientNames) & set(ingredientsEx)) == 0 ] # & is intersection
-    return jsonify(matchingRecipes)
+def atmost(recipeModels, ingredientsInc, minMatchNo):
+    powersetIngredients = powerset(ingredientsInc)
+    matchingRecipeModels = []
+    for ingMatch, notIngMatch in powersetIngredients:
+        if len(ingMatch) >= minMatchNo:
+            for recipe in recipeModels:
+                if ingMatch == recipe.ingredientNames:
+                    matchingRecipeModels.append((recipe, ingMatch, notIngMatch))
+    matchingRecipes = []
+    for recipe, ingMatch, notIngMatch in matchingRecipeModels:
+        matchingRecipes.append(modelToDictionaryV2(recipe, ingMatch, notIngMatch))
+    return matchingRecipes
+
 
 # For React Routing
 # Snippet derived from http://flask.pocoo.org/snippets/57/
