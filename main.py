@@ -35,6 +35,7 @@ class Recipe(ndb.Model):
 
 def modelToDictionary(recipe, ingredientsMatched, ingredientsNotMatched):
     return {
+        "id": recipe.key.integer_id(),
         "directions": recipe.directions,
         "fat": recipe.fat,
         "categories": recipe.categories,
@@ -99,6 +100,22 @@ def getRecipe():
     else:
         matchingRecipes = atmost(notExcRecipeModels, ingredients, minMatch)
     return jsonify(matchingRecipes)
+
+@app.route("/api/v1/recipe/<id>")
+def getRecipeByID(id):
+    recipeModel = Recipe.get_by_id(int(id))
+    recipe = {
+        "id": int(id),
+        "directions": recipeModel.directions,
+        "fat": recipeModel.fat,
+        "categories": recipeModel.categories,
+        "calories": recipeModel.protein,
+        "rating": recipeModel.rating,
+        "title": recipeModel.title,
+        "ingredients": recipeModel.ingredients,
+        "sodium": recipeModel.sodium,
+    }
+    return jsonify(recipe)
 
 def matchRecipes(matchQueryValue, ingredients, recipeIngredientNames):
     if (matchQueryValue == "Atleast" or matchQueryValue == None):
