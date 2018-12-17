@@ -69,13 +69,8 @@
     outline: none;
     line-height: 60%;
     vertical-align: 38%;
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-
-=======
->>>>>>> origin/Michael's-Branch
 }
+
 #addIngr:hover {
     /*opacity: 1;*/
     background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #65c33d), color-stop(1, #65c33d));
@@ -88,9 +83,8 @@
     top:1px;
     box-shadow: 0 5px #666;
     transform: translateY(4px);
-=======
->>>>>>> origin/Michael's-Branch
 }
+
 #ingredientsLabel
 {
     font-family: 'ARBONNIE';
