@@ -69,12 +69,6 @@
     outline: none;
     line-height: 60%;
     vertical-align: 38%;
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-
-=======
->>>>>>> origin/Michael's-Branch
 }
 #addIngr:hover {
     /*opacity: 1;*/
@@ -88,8 +82,6 @@
     top:1px;
     box-shadow: 0 5px #666;
     transform: translateY(4px);
-=======
->>>>>>> origin/Michael's-Branch
 }
 #ingredientsLabel
 {
