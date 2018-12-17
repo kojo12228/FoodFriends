@@ -39,6 +39,10 @@
     margin-bottom: 0px;
 }
 
+.numberSlider {
+    width: 75px;
+}
+
 .recipeName {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 25px;
@@ -59,6 +63,18 @@
     font-size: 20px;
     text-align: right;
     color: coral
+}
+
+.filterSubtitle {
+    font-family: 'ARBONNIE';
+    font-size: 40px;
+    font-weight: lighter;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.filterText {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .card {
