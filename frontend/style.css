@@ -1,65 +1,108 @@
+@font-face {
+    font-family: 'ARBONNIE';
+    src: url('ar-bonnie.eot');
+    src: local('☺'),
+         url('./fonts/ARBONNIE.woff') format('woff'), 
+         url('./fonts/ARBONNIE.ttf') format('truetype'), 
+         url('./fonts/ARBONNIE.svg#ARBONNIE') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+#arTitle
+{
+    font-family: 'ARBONNIE';
+    font-size: 250px;
+    font-weight: lighter;
+    text-align: center;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
 #entireThing
 {
     background-color: #f2f2f2
 }
 #mainBody 
 {
-   padding: 20px;
+   white-space: nowrap;
 }
-#titleDiv
-{
-   text-align: center;
-   margin-bottom: 30px;
-}
-#mainTitle
-{
-    font-family: 'Open Sans', sans-serif;
-    text-align: center;
-    color: red;
-}
-#ingredientSB
+.ingredientSearch
 {
     text-align: center;
     margin-bottom: 35px;
+    overflow: auto;
+    line-height: 70%;
+
+    /*padding-bottom: 200px;    */
 
 }
 #search
 {
     border: 2px solid #ccc; /*#ccc*/
-    text-align: center; 
-    padding: 13px;    
+    text-align: center;
+    padding-top:0.2%;
+    padding-left: 1%;
+    padding-right: 2%;   
     border-radius:50px;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 45px;
+    font-family: 'Helvetica';
+    font-size: 40px;
     outline: none;
+    
+
+    
 }
 #addIngr
 {
-    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f24537', endColorstr='#c62d1f',GradientType=0);
+
+    width: 40px;
+    height: 40px;
+    padding: 10px 10px;
+    padding-bottom: 25px;
+    font-size: 25px;
+    font-weight: bold;
+    border-radius: 50%;
+    display: inline-block;
     background-color:#65c33d;
-    border:1px solid #d02718;
+    border: 1.5px solid #ccc;
     color:#ffffff;
+    cursor: pointer;
     outline: none;
-    /*Customisations*/
-    border: 1.5px solid #ccc; /*ccc*/
-    border-radius:100px;
-    font-size: 30px;
-    font-family: 'Open Sans', sans-serif;
-    outline: none;
-    width: 4%;
-    opacity: 0.8;
+    line-height: 60%;
+    vertical-align: 38%;
+<<<<<<< HEAD
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> origin/Michael's-Branch
 }
-#addIngr:hover {opacity: 1}
+#addIngr:hover {
+    /*opacity: 1;*/
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #65c33d), color-stop(1, #65c33d));
+    background:-ms-linear-gradient(top, #65c33d 5%, #65c33d 100%);
+    background:linear-gradient(to bottom, #65c33d 5%, #65c33d 100%);
+    background-color:#65c33d;
+}
+#addIngr:active {
+    
+    top:1px;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+=======
+>>>>>>> origin/Michael's-Branch
+}
 #ingredientsLabel
 {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'ARBONNIE';
+    font-size: 40px;
+    font-weight: lighter;
     text-align: left;
+    margin-bottom: 0px;
 }
 #returnedIngredients
 {
     /* Remove default list styling */
+    
     list-style-type: none;
     padding: 0;
     margin: 0;
@@ -71,8 +114,9 @@
     margin-top: -1px; /* Prevent double borders */
     background-color: #ff5454; /* Grey background color */
     padding: 12px; /* Add some padding */
+    font-family: 'Helvetica';
     text-decoration: none; /* Remove default text underline */
-    font-size: 18px; /* Increase the font-size */
+    font-size: 22px; /* Increase the font-size */
     color: black; /* Add a black text color */
     display: block; /* Make it into a block element to fill the whole list */
 }
@@ -82,23 +126,25 @@
 }
 #goGuru
 {
-	text-align: center;
+    text-align: center;
 }
 #submit 
 {
-    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f24537', endColorstr='#c62d1f',GradientType=0);
+    /*filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f24537', endColorstr='#c62d1f',GradientType=0);*/
     background-color:#f24537;
     border:1px solid #d02718;
     color:#ffffff;
     outline: none;
     /*Customisations*/
-     border: 2px solid #ccc;
+    border: 3px solid #ccc;
     padding: 13px;
-    -moz-border-radius:50px;
-    -webkit-border-radius:50px;
     border-radius:50px;
-    font-family: 'Open Sans', sans-serif;
+    box-shadow: 0 7px #999;
+    font-family: 'ARBONNIE';
+    font-size: 40px;
+    font-weight: bold;
     outline: none;
+    cursor: pointer;
 
 }
 /*This causes button to appear indented when hovered over*/
@@ -116,14 +162,16 @@
 /*This allows button to be pressed visually*/
 #submit:active
 {
-    tetx
+    
     top:1px;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
 }
 
 /* LIST #8 */
 #list8 {  }
 #list8 ul { list-style:none; }
-#list8 ul li { font-family:Georgia,serif,Times; font-size:18px; }
+#list8 ul li { font-family:'Helvetica'; font-size:18px; }
 #list8 ul li a { display:block; width:300px; height:28px; background-color:#333; border-left:5px solid #222; border-right:5px solid #222; padding-left:10px;
   text-decoration:none; color:#bfe1f1; }
 #list8 ul li a:hover {  -moz-transform:rotate(-5deg); -moz-box-shadow:10px 10px 20px #000000;
