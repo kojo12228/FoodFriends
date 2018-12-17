@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './style.css';
+import Recipe from './Recipe.js'
 
 
 class App extends Component {
@@ -43,6 +44,7 @@ class App extends Component {
         <div id="rgLogo">
         <img src={ require('./logo.png') } />
         </div>
+        <Recipe />
       </div>
     );
   }
