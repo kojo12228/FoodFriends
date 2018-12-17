@@ -44,7 +44,7 @@ class App extends Component {
         <div id="rgLogo">
         <img src={ require('./logo.png') } />
         </div>
-        <Recipe />
+        <Recipe id="4856496185671680"/>
       </div>
     );
   }
