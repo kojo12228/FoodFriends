@@ -1,10 +1,25 @@
 import React, { Component } from 'react';
+import Router from 'react-router-component'
+
 import logo from './logo.svg';
 import './style.css';
 import Recipe from './Recipe.js'
 
+var Locations = Router.Locations;
+var Location = Router.Location;
 
 class App extends Component {
+  render() {
+    return (
+      <Locations>
+        <Location path='/' handler={Search} />
+        <Location path='/recipe/:id' handler={Recipe} />
+      </Locations>
+    )
+  }
+}
+
+class Search extends Component {
   render() {
     return (
       <div>
@@ -44,7 +59,6 @@ class App extends Component {
         <div id="rgLogo">
         <img src={ require('./logo.png') } />
         </div>
-        <Recipe id="4856496185671680"/>
       </div>
     );
   }
