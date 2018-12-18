@@ -12,14 +12,14 @@ class App extends Component {
   render() {
     return (
       <Locations>
-        <Location path='/' handler={Search} />
+        <Location path='/' handler={SearchHome} />
         <Location path='/recipe/:id' handler={Recipe} />
       </Locations>
     )
   }
 }
 
-class Search extends Component {
+class SearchHome extends Component {
   render() {
     return (
       <div>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
+import './Recipe.css'
 
 export class Recipe extends Component {
     constructor(props) {
@@ -32,25 +33,28 @@ export class Recipe extends Component {
             (ingredient, index) => <li className="ingredientItem" key={index}>{ingredient}</li>
         );
         return(
-            <div id="recipe">
-                <div id="recipeHeader">
-                    <img src={ require('./logo.png') } alt="logo" id="headerLogo" height="100" width="100"/>
-                    <h1 id="recipeName">{this.state.title}</h1>
-                    <Rating rating={this.state.rating}/>
-                </div>
-                <div className="recipeList">
-                    <h2 className="recipeSubHeading">Ingredients</h2>
-                    <ul>{ingredientItems}</ul>
-                </div>
-                <div className="recipeList">
-                    <h2 className="recipeSubHeading">Directions</h2>
-                    <ol>{directionItems}</ol>
-                </div>
-                <div id="stats">
-                    <h2 className="recipeSubHeading">Stats</h2>
-                    <StatBox heading="Calories" value={this.state.calories} />
-                    <StatBox heading="Fat" value={this.state.fat} />
-                    <StatBox heading="Sodium" value={this.state.sodium} />
+            <div>
+                <link rel="stylesheet" href="Recipe.css" />
+                <div id="recipe">
+                    <div id="recipeHeader">
+                        <img src={ require('./logo.png') } alt="logo" id="headerLogo" height="100" width="100"/>
+                        <h1 id="recipeName">{this.state.title}</h1>
+                        <Rating rating={this.state.rating}/>
+                    </div>
+                    <div className="recipeList">
+                        <h2 className="recipeSubHeading">Ingredients</h2>
+                        <ul>{ingredientItems}</ul>
+                    </div>
+                    <div className="recipeList">
+                        <h2 className="recipeSubHeading">Directions</h2>
+                        <ol>{directionItems}</ol>
+                    </div>
+                    <div id="stats">
+                        <h2 className="recipeSubHeading">Stats</h2>
+                        <StatBox heading="Calories" value={this.state.calories} />
+                        <StatBox heading="Fat" value={this.state.fat} />
+                        <StatBox heading="Sodium" value={this.state.sodium} />
+                    </div>
                 </div>
             </div>
         )
