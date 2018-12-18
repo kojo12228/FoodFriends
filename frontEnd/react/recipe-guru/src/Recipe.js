@@ -64,11 +64,8 @@ export class Recipe extends Component {
 function Rating(props) {
     let rating = ""
     for (let index = 0; index < Math.round(props.rating); index++) {
-        rating = rating + "\u25CF"
+        rating = rating + "\u2605"
     }
-    if (Math.round((props.rating % 1) * 2) === 1) {
-        rating = rating + "\u25D6"
-    } 
     return <p id="recipeRating">Rating: {rating}</p>
 }
 
