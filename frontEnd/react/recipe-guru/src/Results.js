@@ -14,7 +14,19 @@ export class Results extends Component {
             title: "Recipe 2",
             percentage: "123"
         };
-        this.state = [recipe, recipe2];
+        let recipe3 = {
+            title: "Recipe 3",
+            percentage: "12233"
+        };
+        let recipe4 = {
+            title: "Recipe 4",
+            percentage: "1235235"
+        };
+        let recipe5 = {
+            title: "Recipe 5",
+            percentage: "123234234"
+        };
+        this.state = [recipe, recipe2, recipe3, recipe4, recipe5];
     }
 
     componentDidMount() {
@@ -27,25 +39,40 @@ export class Results extends Component {
     createCards = () => {
         let parent = []
         let children = []
-        console.log(Object.keys( this.state ).length)
 
         for (let i = 0; i < Object.keys( this.state ).length; i++) {
             children.push(
                 <div>
-                <div className="card">
-                    <div className="container">
+                <div className="column">
+                    <div className="card">
                         <h4 className="recipeName"><b>{this.state[i].title}</b></h4>
                         <hr></hr>
                         <p className="percentage">{this.state[i].percentage}%</p>
                         <p className="requiredIng">Requires <b>X</b> more ingredients</p>
                     </div>
                 </div>
-                <br></br>
                 </div>
             )
         }
 
-        parent.push(<div>{children}</div>)
+        let tempChildren = []
+
+        for (let i = 0; i < Object.keys( this.state ).length; i = i + 4) {
+            tempChildren = [];
+            for (let j = i; j < i + 4; j++) {
+                tempChildren.push(children[j])
+                if (j == Object.keys( this.state ).length - 1) {
+                    break;
+                }
+            }
+            parent.push(<div className="row">{tempChildren}</div>)
+            parent.push(<br></br>)
+            if (i == Object.keys( this.state ).length - 1) {
+                break;
+            }
+        }
+
+        
 
         return parent;
     }
@@ -98,7 +125,7 @@ export class Results extends Component {
                 <h2 id="resultsTitle">
                     Results
                 </h2>
-                
+
                 {this.createCards()}
 
             </div>
