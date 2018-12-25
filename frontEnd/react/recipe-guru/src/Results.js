@@ -1,80 +1,45 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
+import Router from 'react-router-component'
 import './Results.css'
-
+var Link = Router.Link;
 
 export class Results extends Component {
     constructor(props) {
         super(props)
-        let recipe = {
-            title: "No Recipes",
-            percentage: "0"
-        };
-        let recipe2 = {
-            title: "Recipe 2",
-            percentage: "123"
-        };
-        let recipe3 = {
-            title: "Recipe 3",
-            percentage: "12233"
-        };
-        let recipe4 = {
-            title: "Recipe 4",
-            percentage: "1235235"
-        };
-        let recipe5 = {
-            title: "Recipe 5",
-            percentage: "123234234"
-        };
-        this.state = [recipe, recipe2, recipe3, recipe4, recipe5];
+        this.state = {results: []};
     }
 
     componentDidMount() {
         $.getJSON("https://recipe-guru.appspot.com/api/v1/recipes?ing[]=Salt", (data) => {
-            this.setState(data);
+            this.setState({results: data});
             
         })
     }
 
     createCards = () => {
-        let parent = []
-        let children = []
-
-        for (let i = 0; i < Object.keys( this.state ).length; i++) {
-            children.push(
-                <div>
+        const cards = this.state.results.map((recipe, index) => 
+            <div>
                 <div className="column">
                     <div className="card">
-                        <h4 className="recipeName"><b>{this.state[i].title}</b></h4>
+                        <Link href={"recipe/"+recipe.id}><h4 className="recipeName"><b>{recipe.title}</b></h4></Link>
                         <hr></hr>
-                        <p className="percentage">{this.state[i].percentage}%</p>
+                        <p className="percentage">{recipe.percentage}%</p>
                         <p className="requiredIng">Requires <b>X</b> more ingredients</p>
                     </div>
                 </div>
-                </div>
-            )
+            </div>
+        );
+
+        const numRows = Math.floor(cards.length / 4)
+        const rows = []
+
+        for (let i = 0; i < numRows; i = i + 4) {
+            rows.push(<div className="row">{cards.slice(i, i+4)}</div>)
+            rows.push(<br></br>)
         }
 
-        let tempChildren = []
-
-        for (let i = 0; i < Object.keys( this.state ).length; i = i + 4) {
-            tempChildren = [];
-            for (let j = i; j < i + 4; j++) {
-                tempChildren.push(children[j])
-                if (j == Object.keys( this.state ).length - 1) {
-                    break;
-                }
-            }
-            parent.push(<div className="row">{tempChildren}</div>)
-            parent.push(<br></br>)
-            if (i == Object.keys( this.state ).length - 1) {
-                break;
-            }
-        }
-
-        
-
-        return parent;
+        return rows
     }
 
     render() {
