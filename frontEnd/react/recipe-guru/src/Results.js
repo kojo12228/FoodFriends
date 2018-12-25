@@ -19,16 +19,7 @@ export class Results extends Component {
 
     createCards = () => {
         const cards = this.state.results.map((recipe, index) => 
-            <div>
-                <div className="column">
-                    <div className="card">
-                        <Link href={"recipe/"+recipe.id}><h4 className="recipeName"><b>{recipe.title}</b></h4></Link>
-                        <hr></hr>
-                        <p className="percentage">{recipe.percentage}%</p>
-                        <p className="requiredIng">Requires <b>X</b> more ingredients</p>
-                    </div>
-                </div>
-            </div>
+            <Card id={recipe.id.toString()} title={recipe.title} percentage={recipe.percentage} required="X"></Card>
         );
 
         const numRows = Math.floor(cards.length / 4)
@@ -100,5 +91,19 @@ export class Results extends Component {
 
 }
 
+function Card(props) {
+    return (
+        <div>
+            <div className="column">
+                <div className="card">
+                    <Link href={"recipe/"+props.id}><h4 className="recipeName"><b>{props.title}</b></h4></Link>
+                    <hr></hr>
+                    <p className="percentage">{props.percentage}%</p>
+                    <p className="requiredIng">Requires <b>{props.required}</b> more ingredients</p>
+                </div>
+            </div>
+        </div>
+    )
+}
 
 export default Results
