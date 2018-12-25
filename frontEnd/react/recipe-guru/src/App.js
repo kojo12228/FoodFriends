@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Router from 'react-router-component'
 
-import logo from './logo.svg';
 import './style.css';
 import Recipe from './Recipe.js'
 import Results from './Results.js'

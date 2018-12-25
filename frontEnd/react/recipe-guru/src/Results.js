@@ -2,30 +2,56 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 import './Results.css'
 
+
 export class Results extends Component {
     constructor(props) {
         super(props)
         let recipe = {
-            calories: 0,
-            categories: [],
-            directions: [],
-            fat: 0,
-            id: 0,
-            ingredients: [],
-            rating: 0,
-            sodium: 0,
-            title: ""
-        }
-        this.state = recipe
+            title: "No Recipes",
+            percentage: "0"
+        };
+        let recipe2 = {
+            title: "Recipe 2",
+            percentage: "123"
+        };
+        this.state = [recipe, recipe2];
     }
 
     componentDidMount() {
-        $.getJSON("https://recipe-guru.appspot.com/api/v1/recipe/4785696233488384", (data) => {
-            this.setState(data)
+        $.getJSON("https://recipe-guru.appspot.com/api/v1/recipes?ing[]=Salt", (data) => {
+            this.setState(data);
+            
         })
     }
 
+    createCards = () => {
+        let parent = []
+        let children = []
+        console.log(Object.keys( this.state ).length)
+
+        for (let i = 0; i < Object.keys( this.state ).length; i++) {
+            children.push(
+                <div>
+                <div className="card">
+                    <div className="container">
+                        <h4 className="recipeName"><b>{this.state[i].title}</b></h4>
+                        <hr></hr>
+                        <p className="percentage">{this.state[i].percentage}%</p>
+                        <p className="requiredIng">Requires <b>X</b> more ingredients</p>
+                    </div>
+                </div>
+                <br></br>
+                </div>
+            )
+        }
+
+        parent.push(<div>{children}</div>)
+
+        return parent;
+    }
+
     render() {
+
 
         return(
             <div>
@@ -72,16 +98,8 @@ export class Results extends Component {
                 <h2 id="resultsTitle">
                     Results
                 </h2>
-
-                {/* This card needs to link to the recipe page kojo created */}
-                <div className="card">
-                    <div className="container">
-                        <h4 className="recipeName"><b>{this.state.title}</b></h4>
-                        <hr></hr>
-                        <p className="percentage">100%</p>
-                        <p className="requiredIng">Requires <b>X</b> more ingredients</p>
-                    </div>
-                </div>
+                
+                {this.createCards()}
 
             </div>
             </div>
@@ -89,4 +107,6 @@ export class Results extends Component {
     }
 
 }
+
+
 export default Results
