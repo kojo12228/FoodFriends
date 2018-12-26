@@ -22,10 +22,9 @@ export class Results extends Component {
             <Card id={recipe.id.toString()} title={recipe.title} percentage={recipe.percentage} required="X"></Card>
         );
 
-        const numRows = Math.floor(cards.length / 4)
         const rows = []
 
-        for (let i = 0; i < numRows; i = i + 4) {
+        for (let i = 0; i < cards.length; i = i + 4) {
             rows.push(<div className="row">{cards.slice(i, i+4)}</div>)
             rows.push(<br></br>)
         }
