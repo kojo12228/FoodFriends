@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 import Router from 'react-router-component'
+import * as qs from 'query-string'
 import './Results.css'
 var Link = Router.Link;
 
@@ -11,7 +12,8 @@ export class Results extends Component {
     }
 
     componentDidMount() {
-        $.getJSON("https://recipe-guru.appspot.com/api/v1/recipes?ing[]=Salt", (data) => {
+        console.log(qs.stringify(this.props._query, {arrayFormat: 'bracket'}))
+        $.getJSON("https://recipe-guru.appspot.com/api/v1/recipes?"+ qs.stringify(this.props._query, {arrayFormat: 'bracket'}), (data) => {
             this.setState({results: data});
             
         })
