@@ -21,17 +21,31 @@ export class Results extends Component {
         };
     }
 
-    componentDidMount() {
-        console.log(qs.stringify(this.props._query, {arrayFormat: 'bracket'}))
-        $.getJSON("https://recipe-guru.appspot.com/api/v1/recipes?"+ qs.stringify(this.props._query, {arrayFormat: 'bracket'}), (data) => {
+    updateRecipes() {
+        let allergies = Object.keys(this.state.allergy).filter(val => this.state.allergy[val] === true)
+
+        let query = qs.stringify(this.props._query, {arrayFormat: 'bracket'})
+        query = query + (allergies.length > 0 ? "&" + qs.stringify({allergies: allergies}, {arrayFormat: 'bracket'}) : "")
+        query = query + (this.state.diet === "None" ? "" : "&" + qs.stringify({diet: this.state.diet}))
+        console.log(query)
+        $.getJSON("https://recipe-guru.appspot.com/api/v1/recipes?"+query, (data) => {
+            data.sort((a,b) => b.percentage - a.percentage)
+            console.log(data)
             this.setState({results: data});
-            
         })
+    }
+
+    componentDidMount() {
+        this.updateRecipes()
     }
 
     createCards = () => {
         const cards = this.state.results.map((recipe, index) => 
-            <Card id={recipe.id.toString()} title={recipe.title} percentage={recipe.percentage} required="X" key={index}></Card>
+            <Card   id={recipe.id.toString()}
+                    title={recipe.title}
+                    percentage={recipe.percentage}
+                    required={recipe.unmatched.length}
+                    key={recipe.id}></Card>
         );
 
         const rows = []
@@ -45,35 +59,18 @@ export class Results extends Component {
     }
 
     setDiet(e) {
-        this.setState({
-            results: this.state.results,
-            diet: e.target.value,
-            allergy: this.state.allergy                        
-        })
+        this.setState({diet: e.target.value})
     }
 
     setAllergy(e) {
         let newAllergies = this.state.allergy;
         newAllergies[e.target.value] = !newAllergies[e.target.value]
-        this.setState({
-            results: this.state.results,
-            diet: e.target.value,
-            allergy: newAllergies                        
-        })
+        this.setState({allergy: newAllergies})
         console.log(e.target);
     }
 
     applyFilter() {
-        let allergies = Object.keys(this.state.allergy).filter(val => this.state.allergy[val] === true)
-
-        let query = qs.stringify(this.props._query, {arrayFormat: 'bracket'})
-        query = query + (allergies.length > 0 ? "&" + qs.stringify({allergies: allergies}, {arrayFormat: 'bracket'}) : "")
-        query = query + (this.state.diet === "None" ? "" : "&" + qs.stringify({diet: this.state.diet}))
-        console.log(query)
-        $.getJSON("https://recipe-guru.appspot.com/api/v1/recipes?"+query, (data) => {
-            console.log(data)
-            this.setState({results: data});
-        })
+        this.updateRecipes()
     }
 
     render() {
@@ -141,7 +138,7 @@ export class Results extends Component {
 
 function Card(props) {
     return (
-        <div key={props.index}>
+        <div>
             <div className="column">
                 <div className="card">
                     <Link href={"/recipe/"+props.id}><h4 className="recipeName"><b>{props.title}</b></h4></Link>
