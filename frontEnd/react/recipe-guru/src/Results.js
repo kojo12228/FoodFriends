@@ -67,7 +67,7 @@ export class Results extends Component {
         let allergies = Object.keys(this.state.allergy).filter(val => this.state.allergy[val] === true)
 
         let query = qs.stringify(this.props._query, {arrayFormat: 'bracket'})
-        query = query + (allergies.length > 0 ? "&" + qs.stringify({allergies: allergies}, {arrayFormat: 'bracket'}) : "")
+        query = query + (allergies.length > 0 ? "&" + qs.stringify({allergy: allergies}, {arrayFormat: 'bracket'}) : "")
         query = query + (this.state.diet === "None" ? "" : "&" + qs.stringify({diet: this.state.diet}))
         console.log(query)
         $.getJSON("https://recipe-guru.appspot.com/api/v1/recipes?"+query, (data) => {
