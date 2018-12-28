@@ -92,14 +92,15 @@ def getRecipe():
     else:
         minMatch = int(minMatch)
 
-    recipes = Recipe.query()
-    notExcRecipeModels = [ recipe for recipe in recipes.iter() if len(set(recipe.ingredientNames) & set(ingredientsEx)) == 0 ]
-    matchingRecipes = None
-    if (match == "Atleast" or match == None):
-        matchingRecipes = atleast(notExcRecipeModels, ingredients, minMatch)
-    else:
-        matchingRecipes = atmost(notExcRecipeModels, ingredients, minMatch)
-    return jsonify(matchingRecipes)
+    # recipes = Recipe.query()
+    # notExcRecipeModels = [ recipe for recipe in recipes.iter() if len(set(recipe.ingredientNames) & set(ingredientsEx)) == 0 ]
+    # matchingRecipes = None
+    # if (match == "Atleast" or match == None):
+    #     matchingRecipes = atleast(notExcRecipeModels, ingredients, minMatch)
+    # else:
+    #     matchingRecipes = atmost(notExcRecipeModels, ingredients, minMatch)
+    # return jsonify(matchingRecipes)
+    return jsonify(ingredientsEx)
 
 @app.route("/api/v1/recipe/<id>")
 def getRecipeByID(id):
