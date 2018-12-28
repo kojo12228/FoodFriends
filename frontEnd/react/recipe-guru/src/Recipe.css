@@ -58,11 +58,9 @@
     vertical-align: middle;
     font-weight: bold;
 }
-li {
+li, ol {
     list-style-type: none;
-}
-ol {
-    list-style-type: none;
+    margin-bottom: 8px;
 }
 .card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
