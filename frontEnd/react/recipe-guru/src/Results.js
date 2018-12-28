@@ -8,7 +8,17 @@ var Link = Router.Link;
 export class Results extends Component {
     constructor(props) {
         super(props)
-        this.state = {results: []};
+        this.state = {
+            results: [],
+            diet: "None",
+            allergy: {
+                Diary: false,
+                Gluten: false,
+                Fish: false,
+                Nuts: false,
+                Shellfish: false
+            }
+        };
     }
 
     componentDidMount() {
@@ -21,7 +31,7 @@ export class Results extends Component {
 
     createCards = () => {
         const cards = this.state.results.map((recipe, index) => 
-            <Card id={recipe.id.toString()} title={recipe.title} percentage={recipe.percentage} required="X"></Card>
+            <Card id={recipe.id.toString()} title={recipe.title} percentage={recipe.percentage} required="X" key={index}></Card>
         );
 
         const rows = []
@@ -34,6 +44,38 @@ export class Results extends Component {
         return rows
     }
 
+    setDiet(e) {
+        this.setState({
+            results: this.state.results,
+            diet: e.target.value,
+            allergy: this.state.allergy                        
+        })
+    }
+
+    setAllergy(e) {
+        let newAllergies = this.state.allergy;
+        newAllergies[e.target.value] = !newAllergies[e.target.value]
+        this.setState({
+            results: this.state.results,
+            diet: e.target.value,
+            allergy: newAllergies                        
+        })
+        console.log(e.target);
+    }
+
+    applyFilter() {
+        let allergies = Object.keys(this.state.allergy).filter(val => this.state.allergy[val] === true)
+
+        let query = qs.stringify(this.props._query, {arrayFormat: 'bracket'})
+        query = query + (allergies.length > 0 ? "&" + qs.stringify({allergies: allergies}, {arrayFormat: 'bracket'}) : "")
+        query = query + (this.state.diet === "None" ? "" : "&" + qs.stringify({diet: this.state.diet}))
+        console.log(query)
+        $.getJSON("https://recipe-guru.appspot.com/api/v1/recipes?"+query, (data) => {
+            console.log(data)
+            this.setState({results: data});
+        })
+    }
+
     render() {
 
 
@@ -43,21 +85,26 @@ export class Results extends Component {
             <div className="filterPanel">
                 <img src={ require('./logo.png') } id="rgLogo" alt="Recipe Guru"></img>
                 <h3 id="filterTitle">Filter Results</h3>
+                <button onClick={this.applyFilter.bind(this)} style={{marginLeft: "50px", padding: "10px"}}>Apply Filter</button>
                 <h4 className="filterSubtitle">Percentage Match</h4>
                 <p className="filterText">0 <input type="range" id="percentageSlider" min="0" max="10"></input> 100</p>
                 <hr></hr>
                 <h4 className="filterSubtitle">Diet</h4>
-                <input type="radio" name="Diet" value="None" /> <label className="filterText"> None </label> <br></br>
-                <input type="radio" name="Diet" value="Vegan" /><label className="filterText"> Vegan</label> <br></br>
-                <input type="radio" name="Diet" value="Vegetarian" /> <label className="filterText"> Vegetarian"</label>  <br></br>
-                <input type="radio" name="Diet" value="Pescatarian" /> <label className="filterText"> Pescatarian</label> <br></br>
+                <div onChange={this.setDiet.bind(this)}>
+                    <input type="radio" name="Diet" value="None" /> <label className="filterText"> None </label> <br></br>
+                    <input type="radio" name="Diet" value="Vgn" /><label className="filterText"> Vegan</label> <br></br>
+                    <input type="radio" name="Diet" value="Vgt" /> <label className="filterText"> Vegetarian</label>  <br></br>
+                    <input type="radio" name="Diet" value="Pesc" /> <label className="filterText"> Pescatarian</label> <br></br>
+                </div>
                 <hr></hr>
                 <h4 className="filterSubtitle">Allergy</h4>
-                <input type="checkbox" name="Allergy" value="Dairy" /> <label className="filterText"> Dairy </label> <br></br>
-                <input type="checkbox" name="Allergy" value="Gluten" /> <label className="filterText"> Gluten </label> <br></br>
-                <input type="checkbox" name="Allergy" value="Fish" /> <label className="filterText"> Fish </label> <br></br>
-                <input type="checkbox" name="Allergy" value="Nuts" /> <label className="filterText"> Nuts </label> <br></br>
-                <input type="checkbox" name="Allergy" value="Shellfish" /> <label className="filterText"> Shellfish </label> <br></br>
+                <div onChange={this.setAllergy.bind(this)}>
+                    <input type="checkbox" name="Allergy" value="Dairy" /> <label className="filterText"> Dairy </label> <br></br>
+                    <input type="checkbox" name="Allergy" value="Gluten" /> <label className="filterText"> Gluten </label> <br></br>
+                    <input type="checkbox" name="Allergy" value="Fish" /> <label className="filterText"> Fish </label> <br></br>
+                    <input type="checkbox" name="Allergy" value="Nuts" /> <label className="filterText"> Nuts </label> <br></br>
+                    <input type="checkbox" name="Allergy" value="Shellfish" /> <label className="filterText"> Shellfish </label> <br></br>
+                </div>
                 <hr></hr>
                 <h4 className="filterSubtitle">Calories</h4>
                 <p className="filterText">Less than <input type="number" className="numberSlider" /> calories </p>
@@ -94,10 +141,10 @@ export class Results extends Component {
 
 function Card(props) {
     return (
-        <div>
+        <div key={props.index}>
             <div className="column">
                 <div className="card">
-                    <Link href={"recipe/"+props.id}><h4 className="recipeName"><b>{props.title}</b></h4></Link>
+                    <Link href={"/recipe/"+props.id}><h4 className="recipeName"><b>{props.title}</b></h4></Link>
                     <hr></hr>
                     <p className="percentage">{props.percentage}%</p>
                     <p className="requiredIng">Requires <b>{props.required}</b> more ingredients</p>
