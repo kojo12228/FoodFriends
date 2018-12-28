@@ -64,11 +64,11 @@ def getRecipe():
     if (not diet == None):
         jsonfilepath = os.path.join(app.root_path, 'data', "dietary.json")
         dietaryJSON = json.load(open(jsonfilepath))
-        if (diet[0] == "Vgn"):
+        if (diet == "Vgn"):
             ingredientsEx = ingredientsEx + dietaryJSON['Vegan'] + dietaryJSON['Meat'] + dietaryJSON['Fish'] + dietaryJSON['Egg'] + dietaryJSON['Dairy']
-        elif (diet[0] == "Vgt"):
+        elif (diet == "Vgt"):
             ingredientsEx = ingredientsEx + dietaryJSON['Vegetarian'] + dietaryJSON['Meat'] + dietaryJSON['Fish']
-        elif (diet[0] == "Pesc"):
+        elif (diet == "Pesc"):
             ingredientsEx = ingredientsEx + dietaryJSON['Pescatarian'] + dietaryJSON['Meat']
     
     '''
@@ -167,7 +167,8 @@ def atleast(recipeModels, ingredientsInc, minMatchNo):
         if len(ingMatch) >= minMatchNo:
             for recipe in recipeModels:
                 if set(ingMatch) <= set(recipe.ingredientNames) and len(set(notIngMatch) & set(recipe.ingredientNames)) == 0:
-                    matchingRecipeModels.append((recipe, ingMatch, notIngMatch))
+                    rest = list(set(recipe.ingredientNames) - set(ingMatch))
+                    matchingRecipeModels.append((recipe, ingMatch, rest))
 
     matchingRecipes = []
     for recipe, ingMatch, notIngMatch in matchingRecipeModels:

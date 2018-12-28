@@ -1,0 +1,6 @@
+.gcloudignore
+.git
+.gitignore
+*.pyc
+/frontend
+README.md
