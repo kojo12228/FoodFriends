@@ -12,6 +12,7 @@ export class Recipe extends Component {
             fat: 0,
             id: 0,
             ingredients: [],
+            protein: 0,
             rating: 0,
             sodium: 0,
             title: ""
@@ -55,6 +56,7 @@ export class Recipe extends Component {
                         <StatBox heading="Calories" value={this.state.calories} />
                         <StatBox heading="Fat" value={this.state.fat} />
                         <StatBox heading="Sodium" value={this.state.sodium} />
+                        <StatBox heading="Protein" value={this.state.protein} />
                     </div>
                 </div>
             </div>
