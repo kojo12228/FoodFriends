@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import $ from 'jquery';
-import './Recipe.css'
+import './Recipe.css';
+import Dataset from './Dataset.js';
 
 export class Recipe extends Component {
     constructor(props) {
@@ -21,9 +21,7 @@ export class Recipe extends Component {
     }
 
     componentDidMount() {
-        $.getJSON("https://recipe-guru.appspot.com/api/v1/recipe/" + this.props.id, (data) => {
-            this.setState(data)
-        })
+        Dataset.getRecipe(this.props.id, (data) => this.setState(data))
     }
 
     render() {
@@ -35,7 +33,6 @@ export class Recipe extends Component {
         );
         return(
             <div>
-                <link rel="stylesheet" href="Recipe.css" />
                 <div id="recipe">
                     <div id="recipeHeader" className="card">
                         <img src={ require('./logo.png') } alt="logo" id="headerLogo" height="100" width="100"/>

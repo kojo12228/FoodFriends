@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import $ from 'jquery';
-import Router from 'react-router-component'
-import * as qs from 'query-string'
-import './Results.css'
+import Router from 'react-router-component';
+import './Results.css';
+import Dataset from './Dataset.js';
 var Link = Router.Link;
 
 export class Results extends Component {
@@ -24,15 +23,18 @@ export class Results extends Component {
     updateRecipes() {
         let allergies = Object.keys(this.state.allergy).filter(val => this.state.allergy[val] === true)
 
-        let query = qs.stringify(this.props._query, {arrayFormat: 'bracket'})
-        query = query + (allergies.length > 0 ? "&" + qs.stringify({allergies: allergies}, {arrayFormat: 'bracket'}) : "")
-        query = query + (this.state.diet === "None" ? "" : "&" + qs.stringify({diet: this.state.diet}))
-        console.log(query)
-        $.getJSON("https://recipe-guru.appspot.com/api/v1/recipes?"+query, (data) => {
-            data.sort((a,b) => b.percentage - a.percentage)
-            console.log(data)
-            this.setState({results: data});
-        })
+        Dataset.queryRecipes(
+            this.props._query.ing ? this.props._query.ing : [],
+            this.props._query.ingexc ? this.props._query.ingexc : [],
+            this.state.diet === "None" ? null : this.state.diet,
+            allergies,
+            "Atleast",
+            (data) => {
+                data.sort((a,b) => b.percentage - a.percentage)
+                //console.log(data)
+                this.setState({results: data});
+            }
+        )
     }
 
     componentDidMount() {
