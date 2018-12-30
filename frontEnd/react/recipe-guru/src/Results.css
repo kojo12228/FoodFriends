@@ -27,6 +27,13 @@
     margin-bottom: 0px;
 }
 
+#applyButton {
+    border: none;
+    height: 50px;
+    margin-left: 10%;
+    background: #f1f1f1;
+}
+
 .numberSlider {
     width: 75px;
 }
@@ -107,11 +114,23 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
+.filterCard {
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
+
+.staticCard {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    padding: 16px;
+    background-color: #ff5454;
+}
+
 .filterPanel {
     margin: 0;
     padding: 0;
     width: 300px;
-    background-color: #ff5454;
     position: fixed;
     height: 100%;
     overflow: auto;
