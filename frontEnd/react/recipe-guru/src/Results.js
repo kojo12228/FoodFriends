@@ -10,13 +10,20 @@ export class Results extends Component {
         this.state = {
             results: [],
             diet: "None",
+            caloriesMax: "",
+            fatMax: "",
+            sodiumMax: "",
+            proteinMax: "",
             allergy: {
                 Diary: false,
                 Gluten: false,
                 Fish: false,
                 Nuts: false,
                 Shellfish: false
-            }
+            },
+            percentage: "0",
+            rating: "0",
+                                                                        
         };
     }
 
@@ -31,8 +38,15 @@ export class Results extends Component {
             "Atleast",
             (data) => {
                 data.sort((a,b) => b.percentage - a.percentage)
-                //console.log(data)
-                this.setState({results: data});
+                const filtered = data.filter(recipe => {
+                    return (this.state.caloriesMax === "" || recipe.calories < +this.state.caloriesMax) &&
+                            (this.state.fatMax === "" || recipe.fat < +this.state.fatMax) &&
+                            (this.state.sodiumMax === "" || recipe.sodium < +this.state.sodiumMax) &&
+                            (this.state.proteinMax === "" || recipe.protein < +this.state.proteinMax) &&
+                            (recipe.percentage > (+this.state.percentage) * 10) &&
+                            (recipe.rating > +this.state.rating) 
+                })
+                this.setState({results: filtered});
             }
         )
     }
@@ -71,6 +85,22 @@ export class Results extends Component {
         console.log(e.target);
     }
 
+    setPercentage(e) {
+        console.log(e.target.value);
+        this.setState({percentage: e.target.value})
+    }
+
+    setRating(e) {
+        console.log(e.target.value);
+        this.setState({rating: e.target.value})
+    }
+
+    setMax(val, maxType) {
+        const regex = new RegExp("^[0-9]+$");
+        const newValue = val.match(regex) ? val : "";
+        this.setState({[maxType]: newValue}, () => console.log(this.state[maxType]));
+    }
+    
     applyFilter() {
         this.updateRecipes()
     }
@@ -90,7 +120,8 @@ export class Results extends Component {
 
                 <div className="staticCard filterCard">
                     <h4 className="filterSubtitle">Percentage Match</h4>
-                    <p className="filterText">0 <input type="range" id="percentageSlider" min="0" max="10"></input> 100</p>
+                    <input type="range" className="percentageSlider" min="0" max="10" value={this.state.percentage} onChange={this.setPercentage.bind(this)}/>
+                    <p className="filterText">At least {(+this.state.percentage) * 10}%</p>
                 </div>
                 
                 <div className="staticCard filterCard">
@@ -116,27 +147,30 @@ export class Results extends Component {
 
                 <div className="staticCard filterCard">
                     <h4 className="filterSubtitle">Calories</h4>
-                    <p className="filterText">Less than <input type="number" className="numberSlider" /> calories </p>
+                    <p className="filterText">
+                        Less than <input type="number" className="numberSlider" onChange={(e) => this.setMax(e.target.value, "caloriesMax")} value={this.state.caloriesMax}/> calories 
+                    </p>
                 </div>
                 
                 <div className="staticCard filterCard">
                     <h4 className="filterSubtitle">Fat</h4>
-                    <p className="filterText">Less than <input type="number" className="numberSlider" /> grams </p>
+                    <p className="filterText">Less than <input type="number" className="numberSlider" onChange={(e) => this.setMax(e.target.value, "fatMax")} value={this.state.fatMax}/> grams </p>
                 </div>
 
                 <div className="staticCard filterCard">
                     <h4 className="filterSubtitle">Sodium</h4>
-                    <p className="filterText">Less than <input type="number" className="numberSlider" /> milligrams </p>
+                    <p className="filterText">Less than <input type="number" className="numberSlider" onChange={(e) => this.setMax(e.target.value, "sodiumMax")} value={this.state.sodiumMax}/> milligrams </p>
                 </div>
 
                 <div className="staticCard filterCard">
                     <h4 className="filterSubtitle">Protein</h4>
-                    <p className="filterText">Less than <input type="number" className="numberSlider" /> grams </p>
+                    <p className="filterText">Less than <input type="number" className="numberSlider" onChange={(e) => this.setMax(e.target.value, "proteinMax")} value={this.state.proteinMax}/> grams </p>
                 </div>
 
                 <div className="staticCard filterCard">
                     <h4 className="filterSubtitle">Rating</h4>
-                    <p className="filterText">0 <input type="range" id="percentageSlider" min="0" max="5" /> 5 </p>
+                    <input type="range" className="percentageSlider" min="0" max="5" value={this.state.rating} onChange={this.setRating.bind(this)}/>
+                    <p className="filterText">At least {this.state.rating}/5</p>
                 </div>
             </div>
 
