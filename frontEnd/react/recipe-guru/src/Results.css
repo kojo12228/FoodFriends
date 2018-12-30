@@ -32,10 +32,17 @@
     height: 50px;
     margin-left: 10%;
     background: #f1f1f1;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 15px;
+    font-weight: bold;
 }
 
 .numberSlider {
     width: 75px;
+}
+
+.percentageSlider {
+    width: 100%;
 }
 
 .recipeName {
@@ -70,6 +77,7 @@
 
 .filterText {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
 }
 
 /* Float four columns side by side */
