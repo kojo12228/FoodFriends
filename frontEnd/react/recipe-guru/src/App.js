@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Router from 'react-router-component'
+import * as qs from 'query-string';
 
 import './style.css';
 import Recipe from './Recipe.js'
@@ -28,9 +29,11 @@ class SearchHome extends Component {
     this.state = {
       ingredients: [],
       matchedIngredients: [],
-      selectedIngredients: [],
+      includedIngredients: [],
+      excludedIngredients: [],
       input: "",
-      selected: false
+      selected: false,
+      exclude: false
     };
   }
 
@@ -53,27 +56,59 @@ class SearchHome extends Component {
   }
 
   suggestionSelected(suggestion) {
+    if (!this.state.exclude) {
+      this.setState({
+        includedIngredients: this.state.includedIngredients.concat([suggestion])
+      })
+    } else {
+      this.setState({
+        excludedIngredients: this.state.excludedIngredients.concat([suggestion])
+      })
+    }
     this.setState({
-      selectedIngredients: this.state.selectedIngredients.concat([suggestion]),
       input: "",
       matchedIngredients: []
-    })
+    }, () => console.log(this.state.includedIngredients))
+  }
+
+  removeIngredient(ingredient, listType) {
+
+    if (listType === "inclusion") {
+      let list = this.state.includedIngredients;
+      list = list.filter(ing => ing !== ingredient)
+      this.setState({includedIngredients: list})
+    } else {
+      let list = this.state.excludedIngredients;
+      list = list.filter(ing => ing !== ingredient)
+      this.setState({excludedIngredients: list})
+    }
   }
 
   toggleFocus() {
     this.setState({selected: !this.state.selected})
   }
+
+  toggleInclusion() {
+    this.setState({exclude: !this.state.exclude});
+  }
+
+  goGuru() {
+    const queryParams = {
+      ing: this.state.includedIngredients,
+      ingexc: this.state.excludedIngredients
+    }
+    const queryString = qs.stringify(queryParams, {arrayFormat: "bracket"});
+    window.location.href = "/results?" + queryString;
+  }
  
   
 
   render() {
-    let selectedIngredients = this.state.selectedIngredients.map(ing => {
-      return (
-        <div key={ing} className="selectedIng">
-          <button className="removeIng">{"\u274C"}</button>
-          <p>{ing}</p>
-        </div>
-      )
+    let incIngr = this.state.includedIngredients.map(ing => {
+      return <ListCard ing={ing} type="inclusion" remove={() => this.removeIngredient(ing, "inclusion") }/>
+    })
+    let excIngr = this.state.excludedIngredients.map(ing => {
+      return <ListCard ing={ing} type="exclusion" remove={() => this.removeIngredient(ing, "exclusion") }/>
     })
     let suggestedIngredients = this.state.matchedIngredients.map(ing => {
       return (
@@ -86,50 +121,62 @@ class SearchHome extends Component {
       <div>
         <link rel="stylesheet" href="style.css" />
         <title>Recipe Guru</title>
-        <link rel="shortcut icon" href="img/nameofyouriconfile.ico" />
-        {/*links this to a javascript file*/}
-        
-        {/*h1 id="mainTitle">Recipe Guru</h1*/}
-        <a>
-          {/*img src="title2.png" alt="Recipe Guru"*/}
-        </a>
+        <div style={{width: "100%"}}>
+          <img src={ require('./logo.png') } alt="logo" height="200" width="200" style={{display: "block", margin: "auto" }}/>
+        </div>
         <h1 id="arTitle">Recipe Guru</h1>
         {/*Search for ingredients search box + Add Ingredient button*/}
-        <div className="ingredientSearch">
-          {/*Search box*/}
-          <input id="search" type="text" placeholder="Search for ingredients..." size={20} 
+        <div id="ingredientSearch" className="card">
+          <div>
+            <input id="searchField" type="text" placeholder="Search for ingredients..." size={20} 
                   onChange={this.textChanged.bind(this)}
                   onFocus={() => this.toggleFocus()}
                   onBlur={() => this.toggleFocus()}
                   value={this.state.input}/>
-          {/*button*/}
-          <button type="button" id="addIngr">+</button>
+            <hr></hr>
+            <button id="inclusionToggle"
+                    onClick={() => this.toggleInclusion()}
+                    style={{color: this.state.exclude ? "red" : "black"}}>
+              {this.state.exclude ? "exclude mode" : "include mode"}</button>
+          </div>
+          <div id="suggestedIng">
+            {suggestedIngredients}
+          </div>
         </div>
-        {/*Ingredients List/results*/}
-        {/*<div className="ingredientsResults">
-          <h2 id="ingredientsLabel">Selected Ingredients</h2> 
-          {/*       <div class="left area" >
-        <span id= "ingr_elem">
-          Selected Ingredients:
-        </span> }
-
-        </div>
-        <ol id="returnedIngredients">
-          <li><a href="#">Milk</a></li>
-          <li><a href="#">Asparagus</a></li>
-          <li><a href="#">Paprika</a></li>
-        </ol>*/}
-        <div style={{overflowY: "scroll", maxHeight: "250px", width: "50%", margin: "auto"}}>{suggestedIngredients}</div>
-        <div style={{width: "50%", margin: "auto"}}>{selectedIngredients}</div>
+          {this.state.includedIngredients.length === 0 ? <div></div> :
+            <div style={{textAlign: "center"}}>
+              <h2 style={{marginTop: "20px", marginBottom: "0px"}}>Included Ingredients</h2>
+              <div style={{width:"60%", overflowX:"hidden", marginLeft: "auto", marginRight: "auto"}}>{incIngr}</div>
+            </div>
+          }
+          {this.state.excludedIngredients.length === 0 ? <div></div> :
+            <div style={{textAlign: "center"}}>
+              <h2 style={{marginTop: "20px", marginBottom: "0px"}}>Excluded Ingredients</h2>
+              <div style={{width:"60%", overflowX:"hidden", marginLeft: "auto", marginRight: "auto"}}>
+                {excIngr}
+              </div>
+            </div>
+          }
+        
         <div id="goGuru">
-          <button type="button" id="submit">GO GURU!</button>
-        </div>
-        <div id="rgLogo">
-        <img src={ require('./logo.png') } />
+          <button type="button" id="submit" className="card"
+                  onClick={() => this.goGuru()}>GO GURU!</button>
         </div>
       </div>
     );
   }
+}
+
+function ListCard(props) {
+  const style = props.type === "inclusion" ? "inclusionCard listcard" : "exclusionCard listcard";
+  const buttonStyle = props.type === "inclusion" ? " cardButton inclusionCardButton" : " cardButton exclusionCardButton"
+
+  return (
+    <div key={props.ing} className={style}>
+        <p>{props.ing}</p>
+        <button className={buttonStyle} onClick={props.remove}>Remove</button>
+    </div>
+  )
 }
 
 export default App;

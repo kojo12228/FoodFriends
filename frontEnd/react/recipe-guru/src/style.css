@@ -12,11 +12,13 @@
 #arTitle
 {
     font-family: 'ARBONNIE';
-    font-size: 250px;
+    font-size: 150px;
     font-weight: lighter;
     text-align: center;
     margin-top: 0px;
     margin-bottom: 0px;
+    margin-left: auto;
+    margin-bottom: auto;
 }
 #entireThing
 {
@@ -26,98 +28,80 @@
 {
    white-space: nowrap;
 }
-.ingredientSearch
-{
+
+
+#ingredientSearch {
+    border-radius: 10px;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+#searchField {
     text-align: center;
-    margin-bottom: 35px;
     overflow: auto;
     line-height: 70%;
-
-    /*padding-bottom: 200px;    */
-
+    width: 100%;
+    height: 40px;
+    font-size: 30px;
+    border: none;
+    background: transparent;
 }
-#search
-{
-    border: 2px solid #ccc; /*#ccc*/
-    text-align: center;
-    padding-top:3px;
-    padding: 13px;    
-    border-radius:50px;
-    font-family: 'Helvetica';
-    font-size: 40px;
-    outline: none;
-    /*vertical-align: top;*/
-    
-
-    
+#inclusionToggle {
+    background: #cecece;
+    border: none;
+    font-size: 20px;
+    border-radius: 4px;
 }
-#addIngr
-{
-
-    width: 50px;
-    height: 50px;
-    font-size: 25px;
-    border-radius: 50%;
-    display: inline-block;
-    background-color:#65c33d;
-    border: 1.5px solid #ccc;
-    color:#ffffff;
-    cursor: pointer;
-    outline: none;
-    line-height: 70%;
-    vertical-align: 40%;
-
+#suggestedIng {
+    max-height: 400px;
+    overflow-y: auto;
 }
-#addIngr:hover {
-    /*opacity: 1;*/
-    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #65c33d), color-stop(1, #65c33d));
-    background:-ms-linear-gradient(top, #65c33d 5%, #65c33d 100%);
-    background:linear-gradient(to bottom, #65c33d 5%, #65c33d 100%);
-    background-color:#65c33d;
-}
-#addIngr:active {
-    
-    top:1px;
-    box-shadow: 0 5px #666;
-    transform: translateY(4px);
 
-}
-#ingredientsLabel
-{
+h2 {
     font-family: 'ARBONNIE';
-    font-size: 40px;
-    font-weight: lighter;
-    text-align: left;
-    margin-bottom: 0px;
+    font-size: 50px;
 }
-#returnedIngredients
-{
-    /* Remove default list styling */
-    
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    margin-bottom: 12px;
+.listcard {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    text-align: center;
+    padding: 8px;
+    float: left;
+    margin: 12px;
 }
-#returnedIngredients li a 
-{
-    border: 2px solid #ccc; /* Add a #ddd border to all links */
-    margin-top: -1px; /* Prevent double borders */
-    background-color: #ff5454; /* Grey background color */
-    padding: 12px; /* Add some padding */
-    font-family: 'Helvetica';
-    text-decoration: none; /* Remove default text underline */
-    font-size: 22px; /* Increase the font-size */
-    color: black; /* Add a black text color */
-    display: block; /* Make it into a block element to fill the whole list */
+
+.listcard:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
-#returnedIngredients li a:hover:not(.header) 
-{
-    background-color: #eee; /* Add a hover effect to all links, except for headers */
+.listcard:active {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+.inclusionCard {
+    float: left;
+    background: #f1f1f1;
+}
+.exclusionCard {
+    float: left;
+    background: red;
+    color: white;
+}
+.cardButton {
+    border: none;
+    padding: 4px;
+    width: 100%;
+    height: 30px;
+}
+.inclusionCardButton {
+    background: #cecece;
+    color: black;
+}
+.exclusionCardButton {
+    background: rgb(173, 1, 1);
+    color: white;
 }
 #goGuru
 {
     text-align: center;
+    margin-top: 30px;
 }
 #submit 
 {
@@ -158,7 +142,6 @@
     box-shadow: 0 5px #666;
     transform: translateY(4px);
 }
-
 /* Kojo's Additions */
 .suggestedItem {
     font-family: Arial, Helvetica, sans-serif;
@@ -170,40 +153,4 @@
 .suggestedItem:active {
     background: #ff5454;
 }
-
-.removeIng {
-    border: none;
-    background: #ff5454;
-    width: 30px;
-    height: 30px;
-    float: left;
-    margin-left: 10px;
-}
-.removeIng:hover {
-    background: #af3838;
-}
-.removeIng:active {
-    background: #611f1f;
-}
-.selectedIng {
-    background: #ff5454;
-    height: 30px
-}
-
-/* LIST #8 */
-#list8 {  }
-#list8 ul { list-style:none; }
-#list8 ul li { font-family:'Helvetica'; font-size:18px; }
-#list8 ul li a { display:block; width:300px; height:28px; background-color:#333; border-left:5px solid #222; border-right:5px solid #222; padding-left:10px;
-  text-decoration:none; color:#bfe1f1; }
-#list8 ul li a:hover {  -moz-transform:rotate(-5deg); -moz-box-shadow:10px 10px 20px #000000;
-  -webkit-transform:rotate(-5deg); -webkit-box-shadow:10px 10px 20px #000000;
-  transform:rotate(-5deg); box-shadow:10px 10px 20px #000000; }
-
-
-#rgLogo
-{
-   text-align: center;
-}
-
 
