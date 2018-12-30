@@ -57,7 +57,9 @@
     overflow-y: auto;
 }
 
-h2 {
+.listLabel {
+    margin-top: 20px;
+    margin-bottom: 0px;
     font-family: 'ARBONNIE';
     font-size: 50px;
 }

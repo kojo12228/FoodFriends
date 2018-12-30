@@ -145,13 +145,13 @@ class SearchHome extends Component {
         </div>
           {this.state.includedIngredients.length === 0 ? <div></div> :
             <div style={{textAlign: "center"}}>
-              <h2 style={{marginTop: "20px", marginBottom: "0px"}}>Included Ingredients</h2>
+              <h2 className="listLabel">Included Ingredients</h2>
               <div style={{width:"60%", overflowX:"hidden", marginLeft: "auto", marginRight: "auto"}}>{incIngr}</div>
             </div>
           }
           {this.state.excludedIngredients.length === 0 ? <div></div> :
             <div style={{textAlign: "center"}}>
-              <h2 style={{marginTop: "20px", marginBottom: "0px"}}>Excluded Ingredients</h2>
+              <h2 className="listLabel">Excluded Ingredients</h2>
               <div style={{width:"60%", overflowX:"hidden", marginLeft: "auto", marginRight: "auto"}}>
                 {excIngr}
               </div>
