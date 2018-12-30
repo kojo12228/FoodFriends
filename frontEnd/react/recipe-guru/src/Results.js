@@ -84,43 +84,60 @@ export class Results extends Component {
             <div className="filterPanel">
                 <img src={ require('./logo.png') } id="rgLogo" alt="Recipe Guru"></img>
                 <h3 id="filterTitle">Filter Results</h3>
-                <button onClick={this.applyFilter.bind(this)} style={{marginLeft: "50px", padding: "10px"}}>Apply Filter</button>
-                <h4 className="filterSubtitle">Percentage Match</h4>
-                <p className="filterText">0 <input type="range" id="percentageSlider" min="0" max="10"></input> 100</p>
-                <hr></hr>
-                <h4 className="filterSubtitle">Diet</h4>
-                <div onChange={this.setDiet.bind(this)}>
-                    <input type="radio" name="Diet" value="None" /> <label className="filterText"> None </label> <br></br>
-                    <input type="radio" name="Diet" value="Vgn" /><label className="filterText"> Vegan</label> <br></br>
-                    <input type="radio" name="Diet" value="Vgt" /> <label className="filterText"> Vegetarian</label>  <br></br>
-                    <input type="radio" name="Diet" value="Pesc" /> <label className="filterText"> Pescatarian</label> <br></br>
-                </div>
-                <hr></hr>
-                <h4 className="filterSubtitle">Allergy</h4>
-                <div onChange={this.setAllergy.bind(this)}>
-                    <input type="checkbox" name="Allergy" value="Dairy" /> <label className="filterText"> Dairy </label> <br></br>
-                    <input type="checkbox" name="Allergy" value="Gluten" /> <label className="filterText"> Gluten </label> <br></br>
-                    <input type="checkbox" name="Allergy" value="Fish" /> <label className="filterText"> Fish </label> <br></br>
-                    <input type="checkbox" name="Allergy" value="Nuts" /> <label className="filterText"> Nuts </label> <br></br>
-                    <input type="checkbox" name="Allergy" value="Shellfish" /> <label className="filterText"> Shellfish </label> <br></br>
-                </div>
-                <hr></hr>
-                <h4 className="filterSubtitle">Calories</h4>
-                <p className="filterText">Less than <input type="number" className="numberSlider" /> calories </p>
-                <hr></hr>
-                <h4 className="filterSubtitle">Fat</h4>
-                <p className="filterText">Less than <input type="number" className="numberSlider" /> grams </p>
-                <hr></hr>
-                <h4 className="filterSubtitle">Sodium</h4>
-                <p className="filterText">Less than <input type="number" className="numberSlider" /> milligrams </p>
-                <hr></hr>
-                <h4 className="filterSubtitle">Protein</h4>
-                <p className="filterText">Less than <input type="number" className="numberSlider" /> grams </p>
-                <hr></hr>
-                <h4 className="filterSubtitle">Rating</h4>
-                <p className="filterText">0 <input type="range" id="percentageSlider" min="0" max="5" /> 5 </p>
-                <hr></hr>
+                
+                <button onClick={this.applyFilter.bind(this)}
+                        className="card filterCard" id="applyButton">Apply Filter</button>
 
+                <div className="staticCard filterCard">
+                    <h4 className="filterSubtitle">Percentage Match</h4>
+                    <p className="filterText">0 <input type="range" id="percentageSlider" min="0" max="10"></input> 100</p>
+                </div>
+                
+                <div className="staticCard filterCard">
+                    <h4 className="filterSubtitle">Diet</h4>
+                    <div onChange={this.setDiet.bind(this)}>
+                        <input type="radio" name="Diet" value="None" /> <label className="filterText"> None </label> <br></br>
+                        <input type="radio" name="Diet" value="Vgn" /><label className="filterText"> Vegan</label> <br></br>
+                        <input type="radio" name="Diet" value="Vgt" /> <label className="filterText"> Vegetarian</label>  <br></br>
+                        <input type="radio" name="Diet" value="Pesc" /> <label className="filterText"> Pescatarian</label> <br></br>
+                    </div>
+                </div>
+                
+                <div className="staticCard filterCard">
+                    <h4 className="filterSubtitle">Allergy</h4>
+                    <div onChange={this.setAllergy.bind(this)}>
+                        <input type="checkbox" name="Allergy" value="Dairy" /> <label className="filterText"> Dairy </label> <br></br>
+                        <input type="checkbox" name="Allergy" value="Gluten" /> <label className="filterText"> Gluten </label> <br></br>
+                        <input type="checkbox" name="Allergy" value="Fish" /> <label className="filterText"> Fish </label> <br></br>
+                        <input type="checkbox" name="Allergy" value="Nuts" /> <label className="filterText"> Nuts </label> <br></br>
+                        <input type="checkbox" name="Allergy" value="Shellfish" /> <label className="filterText"> Shellfish </label> <br></br>
+                    </div>
+                </div>
+
+                <div className="staticCard filterCard">
+                    <h4 className="filterSubtitle">Calories</h4>
+                    <p className="filterText">Less than <input type="number" className="numberSlider" /> calories </p>
+                </div>
+                
+                <div className="staticCard filterCard">
+                    <h4 className="filterSubtitle">Fat</h4>
+                    <p className="filterText">Less than <input type="number" className="numberSlider" /> grams </p>
+                </div>
+
+                <div className="staticCard filterCard">
+                    <h4 className="filterSubtitle">Sodium</h4>
+                    <p className="filterText">Less than <input type="number" className="numberSlider" /> milligrams </p>
+                </div>
+
+                <div className="staticCard filterCard">
+                    <h4 className="filterSubtitle">Protein</h4>
+                    <p className="filterText">Less than <input type="number" className="numberSlider" /> grams </p>
+                </div>
+
+                <div className="staticCard filterCard">
+                    <h4 className="filterSubtitle">Rating</h4>
+                    <p className="filterText">0 <input type="range" id="percentageSlider" min="0" max="5" /> 5 </p>
+                </div>
             </div>
 
             <div className = "results">
