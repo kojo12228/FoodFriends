@@ -46,7 +46,7 @@ class SearchHome extends Component {
 
   textChanged(e) {
     const inputRegex = new RegExp(e.target.value, "i")
-    const matchingIng = this.state.ingredients.filter((ingredient) => {
+    const matchingIng = e.target.value === "" ? [] : this.state.ingredients.filter((ingredient) => {
       return ingredient.match(inputRegex)
     })
     this.setState({
