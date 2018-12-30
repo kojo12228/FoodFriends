@@ -39,7 +39,8 @@ def modelToDictionary(recipe, ingredientsMatched, ingredientsNotMatched):
         "directions": recipe.directions,
         "fat": recipe.fat,
         "categories": recipe.categories,
-        "calories": recipe.protein,
+        "calories": recipe.calories,
+        "protein": recipe.protein,
         "rating": recipe.rating,
         "title": recipe.title,
         "ingredients": recipe.ingredients,
@@ -64,11 +65,11 @@ def getRecipe():
     if (not diet == None):
         jsonfilepath = os.path.join(app.root_path, 'data', "dietary.json")
         dietaryJSON = json.load(open(jsonfilepath))
-        if (diet[0] == "Vgn"):
+        if (diet == "Vgn"):
             ingredientsEx = ingredientsEx + dietaryJSON['Vegan'] + dietaryJSON['Meat'] + dietaryJSON['Fish'] + dietaryJSON['Egg'] + dietaryJSON['Dairy']
-        elif (diet[0] == "Vgt"):
+        elif (diet == "Vgt"):
             ingredientsEx = ingredientsEx + dietaryJSON['Vegetarian'] + dietaryJSON['Meat'] + dietaryJSON['Fish']
-        elif (diet[0] == "Pesc"):
+        elif (diet == "Pesc"):
             ingredientsEx = ingredientsEx + dietaryJSON['Pescatarian'] + dietaryJSON['Meat']
     
     '''
@@ -92,15 +93,14 @@ def getRecipe():
     else:
         minMatch = int(minMatch)
 
-    # recipes = Recipe.query()
-    # notExcRecipeModels = [ recipe for recipe in recipes.iter() if len(set(recipe.ingredientNames) & set(ingredientsEx)) == 0 ]
-    # matchingRecipes = None
-    # if (match == "Atleast" or match == None):
-    #     matchingRecipes = atleast(notExcRecipeModels, ingredients, minMatch)
-    # else:
-    #     matchingRecipes = atmost(notExcRecipeModels, ingredients, minMatch)
-    # return jsonify(matchingRecipes)
-    return jsonify(ingredientsEx)
+    recipes = Recipe.query()
+    notExcRecipeModels = [ recipe for recipe in recipes.iter() if len(set(recipe.ingredientNames) & set(ingredientsEx)) == 0 ]
+    matchingRecipes = None
+    if (match == "Atleast" or match == None):
+        matchingRecipes = atleast(notExcRecipeModels, ingredients, minMatch)
+    else:
+        matchingRecipes = atmost(notExcRecipeModels, ingredients, minMatch)
+    return jsonify(matchingRecipes)
 
 @app.route("/api/v1/recipe/<id>")
 def getRecipeByID(id):
@@ -110,7 +110,8 @@ def getRecipeByID(id):
         "directions": recipeModel.directions,
         "fat": recipeModel.fat,
         "categories": recipeModel.categories,
-        "calories": recipeModel.protein,
+        "calories": recipeModel.calories,
+        "protein": recipeModel.protein,
         "rating": recipeModel.rating,
         "title": recipeModel.title,
         "ingredients": recipeModel.ingredients,
@@ -168,7 +169,8 @@ def atleast(recipeModels, ingredientsInc, minMatchNo):
         if len(ingMatch) >= minMatchNo:
             for recipe in recipeModels:
                 if set(ingMatch) <= set(recipe.ingredientNames) and len(set(notIngMatch) & set(recipe.ingredientNames)) == 0:
-                    matchingRecipeModels.append((recipe, ingMatch, notIngMatch))
+                    rest = list(set(recipe.ingredientNames) - set(ingMatch))
+                    matchingRecipeModels.append((recipe, ingMatch, rest))
 
     matchingRecipes = []
     for recipe, ingMatch, notIngMatch in matchingRecipeModels:
