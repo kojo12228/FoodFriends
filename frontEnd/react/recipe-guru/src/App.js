@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import Router from 'react-router-component'
+import Router from 'react-router-component';
+import Toggle from 'react-toggle';
+import "react-toggle/style.css"
 import * as qs from 'query-string';
 
 import './style.css';
@@ -134,10 +136,13 @@ class SearchHome extends Component {
                   onBlur={() => this.toggleFocus()}
                   value={this.state.input}/>
             <hr></hr>
-            <button id="inclusionToggle"
-                    onClick={() => this.toggleInclusion()}
-                    style={{color: this.state.exclude ? "red" : "black"}}>
-              {this.state.exclude ? "exclude mode" : "include mode"}</button>
+            <label>
+              <Toggle 
+                defaultChecked={!this.state.exclude}
+                onChange={() => this.toggleInclusion()}
+                icons={false}/>
+              <span id="inclusionToggle">{this.state.exclude ? "exclude mode" : "include mode"}</span>
+            </label>
           </div>
           <div id="suggestedIng">
             {suggestedIngredients}

@@ -47,10 +47,9 @@
     background: transparent;
 }
 #inclusionToggle {
-    background: #cecece;
-    border: none;
     font-size: 20px;
-    border-radius: 4px;
+    margin-left: 10px;
+    position: relative;
 }
 #suggestedIng {
     max-height: 400px;
