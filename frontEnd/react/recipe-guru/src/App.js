@@ -70,7 +70,7 @@ class SearchHome extends Component {
     this.setState({
       input: "",
       matchedIngredients: []
-    }, () => console.log(this.state.includedIngredients))
+    })
   }
 
   removeIngredient(ingredient, listType) {
@@ -107,10 +107,10 @@ class SearchHome extends Component {
 
   render() {
     let incIngr = this.state.includedIngredients.map(ing => {
-      return <ListCard ing={ing} type="inclusion" remove={() => this.removeIngredient(ing, "inclusion") }/>
+      return <ListCard key={ing} ing={ing} type="inclusion" remove={() => this.removeIngredient(ing, "inclusion") }/>
     })
     let excIngr = this.state.excludedIngredients.map(ing => {
-      return <ListCard ing={ing} type="exclusion" remove={() => this.removeIngredient(ing, "exclusion") }/>
+      return <ListCard key={ing} ing={ing} type="exclusion" remove={() => this.removeIngredient(ing, "exclusion") }/>
     })
     let suggestedIngredients = this.state.matchedIngredients.map(ing => {
       return (
@@ -144,6 +144,8 @@ class SearchHome extends Component {
               <span id="inclusionToggle">{this.state.exclude ? "exclude mode" : "include mode"}</span>
             </label>
           </div>
+          {this.state.matchedIngredients.length > 0
+           ? <hr></hr> : <div></div>}
           <div id="suggestedIng">
             {suggestedIngredients}
           </div>
