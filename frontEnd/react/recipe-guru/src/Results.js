@@ -44,7 +44,7 @@ export class Results extends Component {
                             (this.state.sodiumMax === "" || recipe.sodium < +this.state.sodiumMax) &&
                             (this.state.proteinMax === "" || recipe.protein < +this.state.proteinMax) &&
                             (recipe.percentage > (+this.state.percentage) * 10) &&
-                            (recipe.rating > +this.state.rating) 
+                            (recipe.rating >= +this.state.rating) 
                 })
                 this.setState({results: filtered});
             }
@@ -66,6 +66,17 @@ export class Results extends Component {
 
         const rows = []
 
+        if (cards.length === 0) {
+            rows.push(
+                <h2>No Results Found</h2>
+            )    
+        }
+        else {
+            rows.push(
+                <h2>Showing {cards.length} Results</h2>
+            )
+        }
+        
         for (let i = 0; i < cards.length; i = i + 4) {
             rows.push(<div className="row">{cards.slice(i, i+4)}</div>)
             rows.push(<br></br>)
