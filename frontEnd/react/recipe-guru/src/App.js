@@ -8,6 +8,7 @@ import './style.css';
 import Recipe from './Recipe.js'
 import Results from './Results.js'
 import Dataset from './Dataset'
+import ErrorPage from './404Error'
 
 var Locations = Router.Locations;
 var Location = Router.Location;
@@ -19,6 +20,7 @@ class App extends Component {
         <Location path='/' handler={SearchHome} />
         <Location path='/recipe/:id' handler={Recipe} />
         <Location path='/results' handler={Results} />
+        <Location path='*' handler={ErrorPage}/>
       </Locations>
     )
   }
