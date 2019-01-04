@@ -5,6 +5,7 @@ import "react-toggle/style.css"
 import * as qs from 'query-string';
 
 import './style.css';
+import Logo from './Logo'
 import Recipe from './Recipe.js'
 import Results from './Results.js'
 import Dataset from './Dataset'
@@ -43,13 +44,13 @@ class SearchHome extends Component {
 
   componentDidMount() {
     Dataset.getIngredients((data) => {
-      //const items = data.map((val, i) => {return {id: i, value: val}})
       this.setState({ingredients: data})
     })
   }
 
   textChanged(e) {
-    const inputRegex = new RegExp(e.target.value, "i")
+    const inputRegex = new RegExp(e.target.value, "i") //regex of search text
+    //Show no results for no search text, otherwise all that match inputRegex
     const matchingIng = e.target.value === "" ? [] : this.state.ingredients.filter((ingredient) => {
       return ingredient.match(inputRegex)
     })
@@ -60,6 +61,9 @@ class SearchHome extends Component {
   }
 
   suggestionSelected(suggestion) {
+    /* While in exclusion mode, add selected ingredients to the exclusion list,
+     * otherwise add them to the inclusion list
+     */
     if (!this.state.exclude) {
       this.setState({
         includedIngredients: this.state.includedIngredients.concat([suggestion])
@@ -69,6 +73,7 @@ class SearchHome extends Component {
         excludedIngredients: this.state.excludedIngredients.concat([suggestion])
       })
     }
+    //Upon selection, reset input to empty string
     this.setState({
       input: "",
       matchedIngredients: []
@@ -76,7 +81,6 @@ class SearchHome extends Component {
   }
 
   removeIngredient(ingredient, listType) {
-
     if (listType === "inclusion") {
       let list = this.state.includedIngredients;
       list = list.filter(ing => ing !== ingredient)
@@ -108,10 +112,10 @@ class SearchHome extends Component {
   
 
   render() {
-    let incIngr = this.state.includedIngredients.map(ing => {
+    let incIngredients = this.state.includedIngredients.map(ing => {
       return <ListCard key={ing} ing={ing} type="inclusion" remove={() => this.removeIngredient(ing, "inclusion") }/>
     })
-    let excIngr = this.state.excludedIngredients.map(ing => {
+    let excIngredients = this.state.excludedIngredients.map(ing => {
       return <ListCard key={ing} ing={ing} type="exclusion" remove={() => this.removeIngredient(ing, "exclusion") }/>
     })
     let suggestedIngredients = this.state.matchedIngredients.map(ing => {
@@ -125,19 +129,18 @@ class SearchHome extends Component {
       <div>
         <link rel="stylesheet" href="style.css" />
         <title>Recipe Guru</title>
-        <div style={{width: "100%"}}>
-          <img src={ require('./logo.png') } alt="logo" height="200" width="200" style={{display: "block", margin: "auto" }}/>
-        </div>
+        <Logo height="200" width="200"/>
         <h1 id="arTitle">Recipe Guru</h1>
-        {/*Search for ingredients search box + Add Ingredient button*/}
         <div id="ingredientSearch" className="card">
           <div>
+            {/* Search box input field */}
             <input id="searchField" type="text" placeholder="Search for ingredients..." size={20} 
                   onChange={this.textChanged.bind(this)}
                   onFocus={() => this.toggleFocus()}
                   onBlur={() => this.toggleFocus()}
                   value={this.state.input}/>
             <hr></hr>
+            {/* Toggle for include/exclude mode */}
             <label>
               <Toggle 
                 defaultChecked={!this.state.exclude}
@@ -153,16 +156,18 @@ class SearchHome extends Component {
           </ul>
         </div>
           {this.state.includedIngredients.length === 0 ? <div></div> :
+            // Included ingredients cards
             <div style={{textAlign: "center"}}>
               <h2 className="listLabel">Included Ingredients</h2>
-              <div style={{width:"60%", overflowX:"hidden", marginLeft: "auto", marginRight: "auto"}}>{incIngr}</div>
+              <div className="listdiv">{incIngredients}</div>
             </div>
           }
           {this.state.excludedIngredients.length === 0 ? <div></div> :
+            // Excluded ingredients cards
             <div style={{textAlign: "center"}}>
               <h2 className="listLabel">Excluded Ingredients</h2>
-              <div style={{width:"60%", overflowX:"hidden", marginLeft: "auto", marginRight: "auto"}}>
-                {excIngr}
+              <div className="listdiv">
+                {excIngredients}
               </div>
             </div>
           }
@@ -176,6 +181,9 @@ class SearchHome extends Component {
   }
 }
 
+/**
+ * Inclusion or exclusion list card.
+ */
 function ListCard(props) {
   const style = props.type === "inclusion" ? "inclusionCard listcard" : "exclusionCard listcard";
   const buttonStyle = props.type === "inclusion" ? " cardButton inclusionCardButton" : " cardButton exclusionCardButton"

@@ -21,6 +21,7 @@ export class Recipe extends Component {
   }
 
   componentDidMount() {
+    //Get recipe on loading component
     Dataset.getRecipe(this.props.id, (data) => this.setState(data))
   }
 
@@ -31,24 +32,31 @@ export class Recipe extends Component {
     const ingredientItems = this.state.ingredients.map(
       (ingredient, index) => <li className="recipeListItem" key={index}>{ingredient}</li>
     );
+
     return (
       <div>
         <div id="recipe">
           <div id="recipeHeader" className="card">
-            <img src={ require('./logo.png') } alt="logo" id="headerLogo" height="100" width="100"/>
+            <a href="/">
+              <img src={ require('./logo.png') } alt="logo" id="headerLogo"
+                   height="100" width="100"/>
+            </a>
             <h1 id="recipeName">{this.state.title}</h1>
             <Rating rating={this.state.rating}/>
           </div>
+
           <div className="card recipeList">
             <h2 className="recipeSubHeading">Ingredients</h2>
             <hr></hr>
-            <ul>{ingredientItems}</ul>
+            <ul style={{paddingLeft: "0px"}}>{ingredientItems}</ul>
           </div>
+
           <div className="card recipeList">
             <h2 className="recipeSubHeading">Directions</h2>
             <hr></hr>
-            <ol>{directionItems}</ol>
+            <ol style={{paddingLeft: "0px"}}>{directionItems}</ol>
           </div>
+
           <div id="stats">
             <StatBox heading="Calories" value={this.state.calories} />
             <StatBox heading="Fat" value={this.state.fat} />
@@ -61,6 +69,9 @@ export class Recipe extends Component {
   }
 }
 
+/**
+ * JSX Element of recipe rating
+ */
 function Rating(props) {
   let rating = ""
   for (let index = 0; index < Math.round(props.rating); index++) {
@@ -69,6 +80,9 @@ function Rating(props) {
   return <p id="recipeRating">Rating: {rating}</p>
 }
 
+/**
+ * JSX Element of recipe dietary information
+ */
 function StatBox(props) {
   return (
     <span className="card statBox">

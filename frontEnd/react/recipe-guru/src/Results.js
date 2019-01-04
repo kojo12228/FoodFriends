@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Results.css';
+import Logo from './Logo'
 import Dataset from './Dataset.js';
 
 export class Results extends Component {
@@ -114,7 +115,7 @@ export class Results extends Component {
       <div>
         <link rel="stylesheet" href="Results.css" />
         <div className="filterPanel">
-          <img src={ require('./logo.png') } id="rgLogo" alt="Recipe Guru"></img>
+          <Logo height="250" width="250"/>
           <h3 id="filterTitle">Filter Results</h3>
             
           <button onClick={this.applyFilter.bind(this)}

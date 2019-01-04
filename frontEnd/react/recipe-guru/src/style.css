@@ -51,6 +51,7 @@
 #suggestedIng {
   max-height: 300px;
   list-style-type: none;
+  padding-left: 0px;
   margin: 0px;
   overflow-y: auto;
 }
@@ -61,6 +62,12 @@
   font-family: 'ARBONNIE';
   font-size: 50px;
 }
+.listdiv {
+  width: 60%;
+  overflow-x: hidden;
+  margin-left: auto;
+  margin-right: auto;
+}
 .listcard {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   text-align: center;
@@ -68,7 +75,6 @@
   float: left;
   margin: 12px;
 }
-
 .listcard:hover {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
