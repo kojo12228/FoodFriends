@@ -116,9 +116,9 @@ class SearchHome extends Component {
     })
     let suggestedIngredients = this.state.matchedIngredients.map(ing => {
       return (
-          <div key={ing}
+          <li key={ing}
               className="suggestedItem"
-              onClick={() => this.suggestionSelected(ing)}>{ing}</div>)
+              onClick={() => this.suggestionSelected(ing)}>{ing}</li>)
     })
 
     return (
@@ -148,9 +148,9 @@ class SearchHome extends Component {
           </div>
           {this.state.matchedIngredients.length > 0
            ? <hr></hr> : <div></div>}
-          <div id="suggestedIng">
+          <ul id="suggestedIng">
             {suggestedIngredients}
-          </div>
+          </ul>
         </div>
           {this.state.includedIngredients.length === 0 ? <div></div> :
             <div style={{textAlign: "center"}}>

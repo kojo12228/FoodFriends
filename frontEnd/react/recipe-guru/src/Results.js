@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import Router from 'react-router-component';
 import './Results.css';
 import Dataset from './Dataset.js';
-var Link = Router.Link;
 
 export class Results extends Component {
   constructor(props) {
