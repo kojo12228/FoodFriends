@@ -198,15 +198,19 @@ function StatFilterCard(props) {
 }
 
 function Card(props) {
+  const recipeLink = () => {
+    window.location.href = "/recipe/" + props.id;
+  }
+
   return (
     <div>
       <div className="column">
-        <div className="card">
-          <Link href={"/recipe/"+props.id}><h4 className="recipeName"><b>{props.title}</b></h4></Link>
+        <button className="card" style={{border: "none"}} onClick={() => recipeLink()}>
+          <h4 className="recipeName"><b>{props.title}</b></h4>
           <hr></hr>
           <p className="percentage">{props.percentage}%</p>
           <p className="requiredIng">Requires <b>{props.required}</b> more ingredients</p>
-        </div>
+        </button>
       </div>
     </div>
   )
