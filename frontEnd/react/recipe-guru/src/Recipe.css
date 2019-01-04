@@ -1,64 +1,64 @@
 /* Recipe Stylesheet */
 #recipe {
-    font-family: Arial, Helvetica, sans-serif;
-    margin: auto;
-    width: 75%;
-    min-width: 400px;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: auto;
+  width: 75%;
+  min-width: 400px;
 }
 #recipeHeader {
-    background-color: red;
+  background-color: red;
 }
 #recipeRating {
-    color: white;
-    display: inline;
-    font-size: 25px;
-    padding-left: 20px;
-    vertical-align: middle;
+  color: white;
+  display: inline;
+  font-size: 25px;
+  padding-left: 20px;
+  vertical-align: middle;
 }
 #recipeName {
-    font-family: 'ARBONNIE';
-    color: white;
-    display: inline;
-    font-size: 80px;
-    padding-left: 20px;
-    padding-right: 20px;
-    vertical-align: middle;
+  font-family: 'ARBONNIE';
+  color: white;
+  display: inline;
+  font-size: 80px;
+  padding-left: 20px;
+  padding-right: 20px;
+  vertical-align: middle;
 }
 #headerLogo {
-    display: inline;
-    vertical-align: middle;
+  display: inline;
+  vertical-align: middle;
 }
 .recipeList {
-    padding: 10px;
-    margin-top: 15px;
+  padding: 10px;
+  margin-top: 15px;
 }
 .recipeSubHeading {
-    color: red
+  color: red
 }
 .statBox {
-    width: 100px;
-    float: left;
-    margin-right: 20px;
-    margin-top: 15px;
+  width: 100px;
+  float: left;
+  margin-right: 20px;
+  margin-top: 15px;
 }
 .statHeading {
-    height: 30px;
+  height: 30px;
 }
 .statHeading, h3 {
-    color: red;
-    text-align: center;
-    vertical-align: middle;
+  color: red;
+  text-align: center;
+  vertical-align: middle;
 }
 .statValue {
-    height: 40px;
-    padding: 3px;
+  height: 40px;
+  padding: 3px;
 }
 .statValue, p {
-    text-align: center;
-    vertical-align: middle;
-    font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+  font-weight: bold;
 }
-li, ol {
-    list-style-type: none;
-    margin-bottom: 8px;
+.recipeListItem {
+  list-style-type: none;
+  margin-bottom: 8px;
 }
