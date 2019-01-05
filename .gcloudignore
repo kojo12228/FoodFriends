@@ -2,5 +2,6 @@
 .git
 .gitignore
 *.pyc
+/frontEnd
 /frontend
 README.md
