@@ -9,6 +9,7 @@
     "react-dom": "^16.6.3",
     "react-router-component": "^0.39.1",
     "react-scripts": "^2.1.2",
+    "react-share": "^2.4.0",
     "react-toggle": "^4.0.2"
   },
   "scripts": {

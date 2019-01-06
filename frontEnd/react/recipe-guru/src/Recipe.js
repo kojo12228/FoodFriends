@@ -1,4 +1,19 @@
 import React, { Component } from 'react';
+import {
+  FacebookShareButton,
+  FacebookIcon,
+  TwitterShareButton,
+  TwitterIcon,
+  RedditShareButton,
+  RedditIcon,
+  WhatsappShareButton,
+  WhatsappIcon,
+  TelegramShareButton,
+  TelegramIcon,
+  EmailShareButton,
+  EmailIcon
+} from 'react-share';
+
 import './Recipe.css';
 import Dataset from './Dataset.js';
 
@@ -32,6 +47,7 @@ export class Recipe extends Component {
     const ingredientItems = this.state.ingredients.map(
       (ingredient, index) => <li className="recipeListItem" key={index}>{ingredient}</li>
     );
+    const url = window.location.href;
 
     return (
       <div>
@@ -43,6 +59,41 @@ export class Recipe extends Component {
             </a>
             <h1 id="recipeName">{this.state.title}</h1>
             <Rating rating={this.state.rating}/>
+          </div>
+
+          <div className="card recipeList">
+            <div id="shareFrame">
+              <div className="shareIcon">
+                <FacebookShareButton url={url}>
+                  <FacebookIcon size={32} round/>
+                </FacebookShareButton>
+              </div>
+              <div className="shareIcon">
+                <TwitterShareButton url={url}>
+                  <TwitterIcon size={32} round/>
+                </TwitterShareButton>
+              </div>
+              <div className="shareIcon">
+                <RedditShareButton url={url}>
+                  <RedditIcon size={32} round/>
+                </RedditShareButton>
+              </div>
+              <div className="shareIcon">
+                <WhatsappShareButton url={url}>
+                  <WhatsappIcon size={32} round/>
+                </WhatsappShareButton>
+              </div>
+              <div className="shareIcon">
+                <TelegramShareButton url={url}>
+                  <TelegramIcon size={32} round/>
+                </TelegramShareButton>
+              </div>
+              <div className="shareIcon">
+                <EmailShareButton url={url}>
+                  <EmailIcon size={32} round/>
+                </EmailShareButton>
+              </div>
+            </div>
           </div>
 
           <div className="card recipeList">
